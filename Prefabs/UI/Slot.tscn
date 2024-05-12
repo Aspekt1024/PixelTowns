@@ -1,0 +1,59 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhqkd3nta8n1y"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/Slot.cs" id="1_1y73a"]
+[ext_resource type="Texture2D" uid="uid://oc8uhj03blal" path="res://Art/Imported/kenney_tiny-town/Tiles/tile_0051.png" id="1_3ghpi"]
+[ext_resource type="FontFile" uid="uid://coerlu6etwe6v" path="res://Art/Imported/Fonts/minecraft-font/MinecraftRegular-Bmg3.otf" id="2_8baqb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_effxc"]
+bg_color = Color(0.329158, 0.329158, 0.329158, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.329412, 0.329412, 0.329412, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkwdq"]
+bg_color = Color(0.827421, 0.762435, 0.638356, 1)
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.827451, 0.760784, 0.639216, 1)
+
+[node name="Slot" type="PanelContainer" node_paths=PackedStringArray("image", "label")]
+custom_minimum_size = Vector2(80, 80)
+offset_right = 24.0
+offset_bottom = 24.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_default_cursor_shape = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_effxc")
+script = ExtResource("1_1y73a")
+image = NodePath("MarginContainer/TextureRect")
+label = NodePath("MarginContainer/Label")
+unselectedStyleBox = SubResource("StyleBoxFlat_effxc")
+selectedStyleBox = SubResource("StyleBoxFlat_hkwdq")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("1_3ghpi")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_8baqb")
+theme_override_font_sizes/font_size = 30
+text = "x9"

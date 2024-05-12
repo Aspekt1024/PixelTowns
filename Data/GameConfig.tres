@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GameConfiguration" load_steps=3 format=3 uid="uid://qhj58pcdxhts"]
+
+[ext_resource type="Resource" uid="uid://c15r25yf64xla" path="res://Data/ItemData/GrowableData.tres" id="1_ltxwp"]
+[ext_resource type="Script" path="res://Scripts/Game/GameConfiguration.cs" id="1_mqwvk"]
+
+[resource]
+script = ExtResource("1_mqwvk")
+growables = ExtResource("1_ltxwp")

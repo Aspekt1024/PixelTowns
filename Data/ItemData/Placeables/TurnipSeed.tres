@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PlaceableData" load_steps=6 format=3 uid="uid://dggmohq05gt2d"]
+
+[ext_resource type="Resource" uid="uid://b4k5b6dgkwb7y" path="res://Data/ItemData/Growables/TurnipData.tres" id="1_54w0g"]
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_52t7s"]
+[ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="3_cb102"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7uo1b"]
+atlas = ExtResource("2_52t7s")
+region = Rect2(144, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hcs00"]
+atlas = ExtResource("2_52t7s")
+region = Rect2(128, 48, 16, 16)
+
+[resource]
+script = ExtResource("3_cb102")
+icon = SubResource("AtlasTexture_7uo1b")
+itemTexture = SubResource("AtlasTexture_hcs00")
+ItemData = ExtResource("1_54w0g")
+MaxStackSize = 99

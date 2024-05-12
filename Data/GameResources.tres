@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameResources" load_steps=4 format=3 uid="uid://c02acig2dn12c"]
+
+[ext_resource type="PackedScene" uid="uid://nfipqlsne4xv" path="res://Prefabs/chicken.tscn" id="1_rr1w8"]
+[ext_resource type="Script" path="res://Scripts/Game/GameResources.cs" id="1_ugnwi"]
+[ext_resource type="PackedScene" uid="uid://dgoaxg2m3fuyy" path="res://Prefabs/growable.tscn" id="2_7l2pb"]
+
+[resource]
+script = ExtResource("1_ugnwi")
+growable = ExtResource("2_7l2pb")
+chicken = ExtResource("1_rr1w8")

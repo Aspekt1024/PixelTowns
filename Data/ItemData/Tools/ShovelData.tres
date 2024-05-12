@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ToolData" load_steps=4 format=3 uid="uid://c2d5xgo4b4gqm"]
+
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="1_rpoee"]
+[ext_resource type="Script" path="res://Scripts/Items/Tools/ToolData.cs" id="2_w2tgq"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ud5wh"]
+atlas = ExtResource("1_rpoee")
+region = Rect2(128, 80, 16, 16)
+
+[resource]
+script = ExtResource("2_w2tgq")
+ToolType = 1000
+Texture = SubResource("AtlasTexture_ud5wh")
+MaxStackSize = 0

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GrowableConfig" load_steps=3 format=3 uid="uid://c15r25yf64xla"]
+
+[ext_resource type="PackedScene" uid="uid://dgoaxg2m3fuyy" path="res://Prefabs/growable.tscn" id="1_d3wu7"]
+[ext_resource type="Script" path="res://Scripts/Items/Growables/GrowableConfig.cs" id="5_p38mq"]
+
+[resource]
+script = ExtResource("5_p38mq")
+growablePrefab = ExtResource("1_d3wu7")

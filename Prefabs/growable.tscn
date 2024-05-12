@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgoaxg2m3fuyy"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Growables/Growable.cs" id="1_1rtjl"]
+
+[node name="Growable" type="Node2D" node_paths=PackedStringArray("sprite")]
+script = ExtResource("1_1rtjl")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]

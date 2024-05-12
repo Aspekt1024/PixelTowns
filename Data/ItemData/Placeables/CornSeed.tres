@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="PlaceableData" load_steps=6 format=3 uid="uid://d0utdotp275li"]
+
+[ext_resource type="Resource" uid="uid://t1o66eamsgat" path="res://Data/ItemData/Growables/CornData.tres" id="1_ew56f"]
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_kg0th"]
+[ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="3_qvhm0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb8mv"]
+atlas = ExtResource("2_kg0th")
+region = Rect2(96, 64, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlbkw"]
+atlas = ExtResource("2_kg0th")
+region = Rect2(80, 64, 16, 16)
+
+[resource]
+script = ExtResource("3_qvhm0")
+icon = SubResource("AtlasTexture_lb8mv")
+itemTexture = SubResource("AtlasTexture_vlbkw")
+ItemData = ExtResource("1_ew56f")
+MaxStackSize = 99

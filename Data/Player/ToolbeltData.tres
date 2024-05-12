@@ -1,0 +1,44 @@
+[gd_resource type="Resource" script_class="ItemContainerData" load_steps=13 format=3 uid="uid://cghqfbw03f2y8"]
+
+[ext_resource type="Resource" uid="uid://c2d5xgo4b4gqm" path="res://Data/ItemData/Tools/ShovelData.tres" id="1_rllb6"]
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/SlotData.cs" id="2_8psaw"]
+[ext_resource type="Resource" uid="uid://cujl0lgb8mbpr" path="res://Data/ItemData/Placeables/LettuceSeed.tres" id="3_m3kd0"]
+[ext_resource type="Resource" uid="uid://bemoil1xqe7fq" path="res://Data/ItemData/Placeables/CarrotSeed.tres" id="4_3avbg"]
+[ext_resource type="Resource" uid="uid://ydr7eswfudd5" path="res://Data/ItemData/Placeables/StrawberrySeed.tres" id="5_2721j"]
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/ItemContainerData.cs" id="6_2dibg"]
+[ext_resource type="Resource" uid="uid://d0utdotp275li" path="res://Data/ItemData/Placeables/CornSeed.tres" id="6_mjrnm"]
+
+[sub_resource type="Resource" id="Resource_ssgkk"]
+script = ExtResource("2_8psaw")
+ItemData = ExtResource("1_rllb6")
+Quantity = 1
+SlotIndex = 0
+
+[sub_resource type="Resource" id="Resource_sxlnh"]
+script = ExtResource("2_8psaw")
+ItemData = ExtResource("4_3avbg")
+Quantity = 2
+SlotIndex = 2
+
+[sub_resource type="Resource" id="Resource_k54i5"]
+script = ExtResource("2_8psaw")
+ItemData = ExtResource("6_mjrnm")
+Quantity = 4
+SlotIndex = 3
+
+[sub_resource type="Resource" id="Resource_3x1fy"]
+script = ExtResource("2_8psaw")
+ItemData = ExtResource("3_m3kd0")
+Quantity = 3
+SlotIndex = 4
+
+[sub_resource type="Resource" id="Resource_hafks"]
+script = ExtResource("2_8psaw")
+ItemData = ExtResource("5_2721j")
+Quantity = 2
+SlotIndex = 5
+
+[resource]
+script = ExtResource("6_2dibg")
+NumSlots = 10
+SlotData = Array[Object]([SubResource("Resource_ssgkk"), SubResource("Resource_sxlnh"), SubResource("Resource_k54i5"), SubResource("Resource_3x1fy"), SubResource("Resource_hafks")])

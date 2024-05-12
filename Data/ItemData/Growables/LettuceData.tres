@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="GrowableData" load_steps=8 format=3 uid="uid://bsjx7kevdkmot"]
+
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="1_dhfnl"]
+[ext_resource type="Script" path="res://Scripts/Items/Growables/GrowableData.cs" id="1_wjdul"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1xbk5"]
+atlas = ExtResource("1_dhfnl")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dhwsa"]
+atlas = ExtResource("1_dhfnl")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ehyx"]
+atlas = ExtResource("1_dhfnl")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0k8ll"]
+atlas = ExtResource("1_dhfnl")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5rh6n"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1xbk5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dhwsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ehyx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0k8ll")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[resource]
+script = ExtResource("1_wjdul")
+DaysToGrow = 10
+SpriteFrames = SubResource("SpriteFrames_5rh6n")
+MaxStackSize = 99

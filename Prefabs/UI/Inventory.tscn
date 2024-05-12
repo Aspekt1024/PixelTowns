@@ -1,0 +1,70 @@
+[gd_scene load_steps=5 format=3 uid="uid://csnwrpfda5507"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/Inventory.cs" id="1_xwkkc"]
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/ItemContainer.cs" id="3_1yltn"]
+[ext_resource type="FontFile" uid="uid://vhr6ypk4dq3i" path="res://Art/Imported/Fonts/minecraft-font/MinecraftBold-nMK1.otf" id="3_ufco0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h4tdi"]
+bg_color = Color(0.305882, 0.258824, 0.235294, 0.862745)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+
+[node name="Inventory" type="PanelContainer" node_paths=PackedStringArray("toolbeltContainer", "backpackContainer")]
+offset_right = 565.0
+offset_bottom = 196.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_h4tdi")
+script = ExtResource("1_xwkkc")
+toolbeltContainer = NodePath("VBoxContainer/ToolbeltMarginContainer")
+backpackContainer = NodePath("VBoxContainer/BackpackMarginContainer")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Header" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="VBoxContainer/Header"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ufco0")
+text = "Inventory
+"
+
+[node name="BackpackMarginContainer" type="MarginContainer" parent="VBoxContainer" node_paths=PackedStringArray("itemGrid")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("3_1yltn")
+itemGrid = NodePath("BackpackGridContainer")
+
+[node name="BackpackGridContainer" type="GridContainer" parent="VBoxContainer/BackpackMarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 8
+
+[node name="ToolbeltMarginContainer" type="MarginContainer" parent="VBoxContainer" node_paths=PackedStringArray("itemGrid")]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+script = ExtResource("3_1yltn")
+itemGrid = NodePath("ToolbeltGridContainer")
+
+[node name="ToolbeltGridContainer" type="GridContainer" parent="VBoxContainer/ToolbeltMarginContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 1
+theme_override_constants/v_separation = 1
+columns = 10

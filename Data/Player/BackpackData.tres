@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemContainerData" load_steps=2 format=3 uid="uid://cd4jdnpju5gyn"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/ItemContainerData.cs" id="1_o4tkd"]
+
+[resource]
+script = ExtResource("1_o4tkd")
+NumSlots = 16
+SlotData = Array[Object]([])

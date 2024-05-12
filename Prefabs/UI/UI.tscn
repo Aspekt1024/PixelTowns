@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://ynaa5b5rupgr"]
+
+[ext_resource type="Script" path="res://Scripts/UI/UIManager.cs" id="1_pk3xh"]
+[ext_resource type="PackedScene" uid="uid://b4cwbuk657slc" path="res://Prefabs/UI/Quickbar.tscn" id="2_2xq05"]
+[ext_resource type="Script" path="res://Scripts/Items/Inventory/InventoryManager.cs" id="2_kks8i"]
+[ext_resource type="PackedScene" uid="uid://csnwrpfda5507" path="res://Prefabs/UI/Inventory.tscn" id="4_sdrrq"]
+[ext_resource type="PackedScene" uid="uid://bhqkd3nta8n1y" path="res://Prefabs/UI/Slot.tscn" id="5_jxey7"]
+
+[node name="Ui" type="CanvasLayer" node_paths=PackedStringArray("Inventory")]
+script = ExtResource("1_pk3xh")
+Inventory = NodePath("InventoryManager")
+
+[node name="InventoryManager" type="Node" parent="." node_paths=PackedStringArray("toolbelt", "inventory")]
+script = ExtResource("2_kks8i")
+toolbelt = NodePath("../Panel/Toolbelt")
+inventory = NodePath("../Panel/Inventory")
+slotPrefab = ExtResource("5_jxey7")
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Toolbelt" parent="Panel" instance=ExtResource("2_2xq05")]
+top_level = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -312.105
+offset_top = -92.0
+offset_right = 312.105
+offset_bottom = -39.6
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="Inventory" parent="Panel" instance=ExtResource("4_sdrrq")]
+layout_mode = 1
+offset_left = 57.0
+offset_top = 41.0
+offset_right = 622.0
+offset_bottom = 237.0
