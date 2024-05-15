@@ -51,6 +51,7 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
     {
         toolbelt.SetContainerData(inventoryData.ToolbeltData, slotPrefab);
         inventory.SetData(inventoryData, slotPrefab);
+        toolbelt.SelectSlotAtIndex(0);
     }
 
     public void OnSlotClicked(ItemContainer itemContainer, Slot slot)
@@ -62,32 +63,65 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
             heldItemSlot.SetSlotData(slotData);
             heldItemSlot.Show();
         }
-        else if (heldSlot != null && slot.IsEmpty()) // TODO handle when slot is of the same type and is stackable
+        else if (heldSlot != null)
         {
-            SlotData slotData = heldItemSlot.SlotData;
-            heldItemSlot.Clear();
-            
-            itemContainer.SetSlotData(slot, slotData);
-            heldSlot = null;
-            heldItemSlot.Hide();
-            observers.ForEach(o => o.OnItemSelected(toolbelt.GetSelectedItemData()));
+            if (slot.IsEmpty())
+            {
+                SlotData slotData = heldItemSlot.SlotData;
+                ClearHeldItemSlot();
+                itemContainer.SetSlotData(slot, slotData);
+                observers.ForEach(o => o.OnItemSelected(toolbelt.GetSelectedItemData())); // TODO find a better way to auto update selected slots
+            }
+            else
+            {
+                TryStackHeldItem(itemContainer, slot);
+            }
         }
     }
 
-    public void OnSelectedItemDepleted(ItemContainer itemContainer)
+    private void TryStackHeldItem(ItemContainer itemContainer, Slot slot)
+    {
+        if (slot.ItemData != heldItemSlot.ItemData) return;
+        
+        int remainingStackSize = slot.ItemData.MaxStackSize - slot.SlotData.Quantity;
+        if (remainingStackSize <= 0) return;
+        
+        int remainingQuantity = heldItemSlot.SlotData.Quantity - remainingStackSize;
+        if (remainingQuantity > 0)
+        {
+            heldItemSlot.SlotData.Quantity = remainingQuantity;
+            itemContainer.UpdateQuantity(slot.SlotData, slot.ItemData.MaxStackSize);
+        }
+        else
+        {
+            itemContainer.UpdateQuantity(slot.SlotData, slot.SlotData.Quantity + heldItemSlot.SlotData.Quantity);
+            ClearHeldItemSlot();
+        }
+        
+        observers.ForEach(o => o.OnItemSelected(toolbelt.GetSelectedItemData())); // TODO find a better way to auto update selected slots
+    }
+
+    private void ClearHeldItemSlot()
+    {
+        heldSlot = null;
+        heldItemSlot.Clear();
+        heldItemSlot.Hide();
+    }
+
+    public void OnSelectedItemRemoved()
     {
         observers.ForEach(o => o.OnItemSelected(null));
     }
 
-    public void SelectQuickbarSlot(int index)
+    public void SelectToolbeltSlot(int index)
     {
         toolbelt.SelectSlotAtIndex(index);
         ItemData itemData = toolbelt.GetItemAtSlotIndex(index);
         observers.ForEach(o => o.OnItemSelected(itemData));
     }
 
-    public ItemData GetSelectedQuickbarItemData() => toolbelt.GetSelectedItemData();
-    public void UseSelectedQuickbarItem() => toolbelt.UseSelectedSlot();
+    public ItemData GetSelectedToolbeltItemData() => toolbelt.GetSelectedItemData();
+    public void UseSelectedToolbeltItem() => toolbelt.UseSelectedSlot();
     public void ToggleInventory()
     {
         inventory.ToggleVisibility();
@@ -99,17 +133,10 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
         inventory.Hide();
         toolbelt.Show();
     }
-
-    public void AddItem(ItemData itemData, int quantity)
-    {
-        int remainingQuantity = toolbelt.AddItem(itemData, quantity);
-        if (remainingQuantity > 0)
-        {
-            remainingQuantity = inventory.AddBackpackItem(itemData, remainingQuantity);
-            if (remainingQuantity > 0)
-            {
-                GD.PrintErr("Handle case when inventory is full!!!");
-            }
-        }
-    }
+    
+    /// <summary>
+    /// Attempts to add the item to the inventory. If there is insufficient inventory space, returns the amount
+    /// of the item that wasn't able to be added. 
+    /// </summary>
+    public int AddItem(ItemData itemData, int quantity) => inventory.AddItem(itemData, quantity);
 }

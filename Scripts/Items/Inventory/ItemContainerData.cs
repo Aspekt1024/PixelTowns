@@ -46,6 +46,19 @@ public partial class ItemContainerData : Resource
         observers.ForEach(o => o.OnSlotDataUpdated(slotData));
     }
 
+    internal void UpdateSlotDataQuantity(SlotData data, int newQuantity)
+    {
+        if (newQuantity > 0)
+        {
+            data.Quantity = newQuantity;
+            AddSlotData(data);
+        }
+        else
+        {
+            RemoveSlotData(data);
+        }
+    }
+
     /// <summary>
     /// Removes the slot data from the item container.
     /// </summary>

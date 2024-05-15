@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://c4y4218011xju"]
+[gd_scene load_steps=18 format=3 uid="uid://c4y4218011xju"]
 
 [ext_resource type="Texture2D" uid="uid://da4brpvqyjo27" path="res://Art/Imported/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_fvejh"]
 [ext_resource type="Script" path="res://Scripts/Units/Player.cs" id="1_o57kg"]
@@ -11,7 +11,6 @@
 [ext_resource type="Texture2D" uid="uid://03cpatnf1bvn" path="res://Art/Imported/Tiny garden_free pack/character_walking_front.png" id="5_h4wic"]
 [ext_resource type="Texture2D" uid="uid://cexedsjvcqr8c" path="res://Art/dirtgrass.png" id="6_fdhqg"]
 [ext_resource type="PackedScene" uid="uid://ynaa5b5rupgr" path="res://Prefabs/UI/UI.tscn" id="11_aqhko"]
-[ext_resource type="Resource" uid="uid://6i17iuadhasa" path="res://Data/ItemData/Growables/CarrotData.tres" id="12_s51lb"]
 [ext_resource type="Resource" uid="uid://22p7rspccpqh" path="res://Data/Player/InventoryData.tres" id="12_sgfou"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hh4um"]
@@ -1648,6 +1647,7 @@ configuration = ExtResource("2_0amof")
 resources = ExtResource("3_hv6cr")
 ui = NodePath("../Ui")
 camera = NodePath("../Player/Camera2D")
+inventoryData = ExtResource("12_sgfou")
 
 [node name="Ui" parent="." instance=ExtResource("11_aqhko")]
 
@@ -1670,8 +1670,6 @@ texture = ExtResource("2_bkfcs")
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(49, 38)
 script = ExtResource("1_o57kg")
-inventoryData = ExtResource("12_sgfou")
-debugAddItem = ExtResource("12_s51lb")
 
 [node name="Sprite2D" type="Sprite2D" parent="Player"]
 texture = ExtResource("5_h4wic")

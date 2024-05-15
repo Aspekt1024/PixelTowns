@@ -47,31 +47,6 @@ public partial class Slot : PanelContainer
 		}
 	}
 
-	/// <summary>
-	/// Adds the amount to the quantity of this item. If this exceeds the maximum stack size,
-	/// it returns the remainder above the maximum stack size. 
-	/// </summary>
-	internal int AddQuantity(int amount)
-	{
-		int amountAboveStackSize = Mathf.Max(0, SlotData.Quantity + amount - SlotData.ItemData.MaxStackSize);
-		SlotData.Quantity += amount - amountAboveStackSize;
-		SetSlotData(SlotData);
-		return amountAboveStackSize;
-	}
-
-	internal void RemoveQuanitity(int amount)
-	{
-		SlotData.Quantity -= amount;
-		if (SlotData.Quantity <= 0)
-		{
-			Clear();
-		}
-		else
-		{
-			SetSlotData(SlotData);	
-		}
-	}
-
 	internal bool IsEmpty() => SlotData == null || SlotData.Quantity <= 0;
 
 	internal bool CanRemoveQuantity(int amount)

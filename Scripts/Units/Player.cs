@@ -7,8 +7,6 @@ namespace PixelTowns;
 public partial class Player : CharacterBody2D, InventoryManager.IObserver
 {
 	[Export] private float Speed = 100f;
-	[Export] private InventoryData inventoryData;
-	[Export] private ItemData debugAddItem;
 
 	private Vector2 velocity = Vector2.Zero;
 	
@@ -23,17 +21,7 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 
 	public override void _Ready()
 	{
-		InventoryManager inventory = GameManager.UI.Inventory;
-
-		InventoryData existingData = InventoryData.LoadData();
-		if (existingData != null)
-		{
-			inventoryData = existingData;
-		}
-        
-		inventory.PopulateInventory(inventoryData);
-		inventory.RegisterObserver(this);
-		inventory.SelectQuickbarSlot(0);
+		GameManager.UI.Inventory.RegisterObserver(this);
 	}
 
 	public override void _Process(double delta)
@@ -47,10 +35,10 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 			}
 			else if (inputMode == InputMode.Plant)
 			{
-				bool success = GameManager.WorldGrid.TryPlaceItem(GameManager.UI.Inventory.GetSelectedQuickbarItemData() as PlaceableData);
+				bool success = GameManager.WorldGrid.TryPlaceItem(GameManager.UI.Inventory.GetSelectedToolbeltItemData() as PlaceableData);
 				if (success)
 				{
-					GameManager.UI.Inventory.UseSelectedQuickbarItem();
+					GameManager.UI.Inventory.UseSelectedToolbeltItem();
 				}
 			}
 		}
@@ -71,7 +59,7 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 
 		if (Input.IsActionJustPressed(InputActions.DebugAdd))
 		{
-			inventoryData.Serialize();
+			GameManager.SaveFile.SaveGame();
 		}
 	}
 

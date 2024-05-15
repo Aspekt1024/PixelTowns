@@ -25,9 +25,14 @@ public partial class Inventory : Control
         backpackContainer.SetContainerData(inventoryData.BackpackData, slotPrefab);
     }
 
-    public int AddBackpackItem(ItemData itemData, int quanitity)
+    public int AddItem(ItemData itemData, int quantity)
     {
-        return backpackContainer.AddItem(itemData, quanitity);
+        int remainingQuantity = toolbeltContainer.AddItem(itemData, quantity);
+        if (remainingQuantity > 0)
+        {
+            remainingQuantity = backpackContainer.AddItem(itemData, remainingQuantity);
+        }
+        return remainingQuantity;
     }
 
     public void ToggleVisibility()

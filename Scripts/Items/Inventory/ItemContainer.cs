@@ -16,7 +16,7 @@ namespace PixelTowns.InventoryManagement
 		internal interface IObserver
 		{
 			void OnSlotClicked(ItemContainer itemContainer, Slot slot);
-			void OnSelectedItemDepleted(ItemContainer itemContainer);
+			void OnSelectedItemRemoved();
 		} 
 
 		private readonly List<IObserver> observers = new List<IObserver>();
@@ -123,7 +123,7 @@ namespace PixelTowns.InventoryManagement
 			var index = slots.FindIndex(s => s.ItemData == item);
 			if (index >= 0)
 			{
-				slots[index].AddQuantity(quantity);
+				itemContainerData.UpdateSlotDataQuantity(slots[index].SlotData, slots[index].SlotData.Quantity + quantity);
 			}
 			else
 			{
@@ -134,8 +134,7 @@ namespace PixelTowns.InventoryManagement
 				}
 
 				SlotData newSlotData = new SlotData(item, quantity, index);
-				itemContainerData.SlotData.Add(newSlotData);
-				slots[index].SetSlotData(newSlotData);
+				itemContainerData.AddSlotData(newSlotData);
 			}
 
 			return 0; // TODO handle items over max stack size
@@ -145,7 +144,11 @@ namespace PixelTowns.InventoryManagement
 		{
 			slotData.SlotIndex = slot.SlotIndex;
 			itemContainerData.AddSlotData(slotData);
-			slot.SetSlotData(slotData);
+		}
+
+		internal void UpdateQuantity(SlotData slotData, int newQuantity)
+		{
+			itemContainerData.UpdateSlotDataQuantity(slotData, newQuantity);
 		}
 
 		internal SlotData TakeFromSlot(Slot slot)
@@ -159,14 +162,7 @@ namespace PixelTowns.InventoryManagement
 		{
 			if (selectedSlot.ItemData is PlaceableData placeableData)
 			{
-				selectedSlot.RemoveQuanitity(1);
-				if (selectedSlot.IsEmpty())
-				{
-					for (int i = observers.Count - 1; i >= 0; i--)
-					{
-						observers[i].OnSelectedItemDepleted(this);
-					}
-				}
+				itemContainerData.UpdateSlotDataQuantity(selectedSlot.SlotData, selectedSlot.SlotData.Quantity - 1);
 			}
 		}
 
@@ -192,6 +188,10 @@ namespace PixelTowns.InventoryManagement
 
 		public void OnSlotDataRemoved(int slotIndex)
 		{
+			if (selectedSlot != null && selectedSlot.SlotIndex == slotIndex)
+			{
+				observers.ForEach(o => o.OnSelectedItemRemoved());
+			}
 			slots[slotIndex].Clear();
 		}
 	}
