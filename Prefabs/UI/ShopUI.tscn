@@ -1,0 +1,202 @@
+[gd_scene load_steps=7 format=3 uid="uid://y2f1frqpn4t7"]
+
+[ext_resource type="PackedScene" uid="uid://cyfi51eiq6sa0" path="res://Prefabs/UI/ShopItem.tscn" id="1_8ufgo"]
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="1_lyvxa"]
+[ext_resource type="PackedScene" uid="uid://csnwrpfda5507" path="res://Prefabs/UI/Inventory.tscn" id="3_mhltt"]
+[ext_resource type="FontFile" uid="uid://vhr6ypk4dq3i" path="res://Art/Imported/Fonts/minecraft-font/MinecraftBold-nMK1.otf" id="4_7w0q4"]
+[ext_resource type="FontFile" uid="uid://coerlu6etwe6v" path="res://Art/Imported/Fonts/minecraft-font/MinecraftRegular-Bmg3.otf" id="5_fcht0"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80liy"]
+atlas = ExtResource("1_lyvxa")
+region = Rect2(144, 144, 16, 16)
+
+[node name="ShopUi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.129412, 0.129412, 0.129412, 0.392157)
+
+[node name="ShopInventory" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -377.0
+offset_right = 674.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_80liy")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="ShopInventory"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 3
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 3
+theme_override_constants/margin_bottom = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ShopInventory/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ShopItem" parent="ShopInventory/MarginContainer/VBoxContainer" instance=ExtResource("1_8ufgo")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ShopItem2" parent="ShopInventory/MarginContainer/VBoxContainer" instance=ExtResource("1_8ufgo")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="ShopItem3" parent="ShopInventory/MarginContainer/VBoxContainer" instance=ExtResource("1_8ufgo")]
+layout_mode = 2
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+[node name="Inventory" parent="." instance=ExtResource("3_mhltt")]
+layout_mode = 0
+offset_left = 1059.0
+offset_top = 693.0
+offset_right = 1624.0
+offset_bottom = 889.0
+
+[node name="Currency" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -221.0
+offset_top = 126.0
+offset_right = 32.0
+offset_bottom = 225.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_80liy")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Currency"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Label" type="Label" parent="Currency/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("4_7w0q4")
+theme_override_font_sizes/font_size = 40
+text = "1000 g"
+
+[node name="Portrait" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -677.0
+offset_top = -369.0
+offset_right = -307.0
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_80liy")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Portrait"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ColorRect" type="ColorRect" parent="Portrait/MarginContainer"]
+layout_mode = 2
+color = Color(1, 0.0871442, 0.977294, 1)
+
+[node name="Greeting" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -696.0
+offset_top = -43.0
+offset_right = -315.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_80liy")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+metadata/_edit_group_ = true
+
+[node name="MarginContainer" type="MarginContainer" parent="Greeting"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Label" type="Label" parent="Greeting/MarginContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_fcht0")
+theme_override_font_sizes/font_size = 40
+text = "Hi there, hello. This is my shop."
+autowrap_mode = 2
