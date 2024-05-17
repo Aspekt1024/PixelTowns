@@ -12,3 +12,5 @@ script = ExtResource("2_w2tgq")
 ToolType = 1000
 Texture = SubResource("AtlasTexture_ud5wh")
 MaxStackSize = 0
+GoldCost = 0
+Category = 1000

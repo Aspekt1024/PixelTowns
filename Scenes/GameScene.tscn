@@ -8,10 +8,10 @@
 [ext_resource type="Resource" uid="uid://c02acig2dn12c" path="res://Data/GameResources.tres" id="3_hv6cr"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="4_7i365"]
 [ext_resource type="Script" path="res://Scripts/World/WorldGrid.cs" id="4_fpeki"]
+[ext_resource type="Resource" uid="uid://cxw02htk8jpd2" path="res://Data/Player/PlayerStartingData.tres" id="4_iexxg"]
 [ext_resource type="Texture2D" uid="uid://03cpatnf1bvn" path="res://Art/Imported/Tiny garden_free pack/character_walking_front.png" id="5_h4wic"]
 [ext_resource type="Texture2D" uid="uid://cexedsjvcqr8c" path="res://Art/dirtgrass.png" id="6_fdhqg"]
 [ext_resource type="PackedScene" uid="uid://ynaa5b5rupgr" path="res://Prefabs/UI/UI.tscn" id="11_aqhko"]
-[ext_resource type="Resource" uid="uid://22p7rspccpqh" path="res://Data/Player/InventoryData.tres" id="12_sgfou"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hh4um"]
 resource_name = "KenneyAdventure"
@@ -1647,7 +1647,7 @@ configuration = ExtResource("2_0amof")
 resources = ExtResource("3_hv6cr")
 ui = NodePath("../Ui")
 camera = NodePath("../Player/Camera2D")
-inventoryData = ExtResource("12_sgfou")
+startingPlayerData = ExtResource("4_iexxg")
 
 [node name="Ui" parent="." instance=ExtResource("11_aqhko")]
 

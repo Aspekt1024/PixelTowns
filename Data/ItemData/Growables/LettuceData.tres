@@ -44,3 +44,5 @@ script = ExtResource("1_wjdul")
 DaysToGrow = 10
 SpriteFrames = SubResource("SpriteFrames_5rh6n")
 MaxStackSize = 99
+GoldCost = 0
+Category = 3000

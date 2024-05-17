@@ -11,4 +11,5 @@ public class InputActions
     public const string Inventory = "inventory";
     public const string Exit = "exit";
     public const string DebugAdd = "debugAdd";
+    public const string Shop = "shop";
 }

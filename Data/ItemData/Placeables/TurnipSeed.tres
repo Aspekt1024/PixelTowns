@@ -18,3 +18,5 @@ icon = SubResource("AtlasTexture_7uo1b")
 itemTexture = SubResource("AtlasTexture_hcs00")
 ItemData = ExtResource("1_54w0g")
 MaxStackSize = 99
+GoldCost = 0
+Category = 2000

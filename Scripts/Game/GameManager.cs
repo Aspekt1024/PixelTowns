@@ -12,8 +12,7 @@ public partial class GameManager : Node
 	[Export] private UIManager ui;
 	[Export] private Camera2D camera;
 	
-	// TODO create starting equipment data system
-	[Export] private InventoryData inventoryData;
+	[Export] private PlayerData startingPlayerData;
 
 	private static GameManager instance;
 
@@ -38,7 +37,7 @@ public partial class GameManager : Node
 	{
 		saveFile = SaveFile.Load() ?? new SaveFile()
 		{
-			InventoryData = inventoryData,
+			PlayerData = startingPlayerData,
 		};
 		saveFile.ApplyData();
 	}

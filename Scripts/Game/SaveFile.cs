@@ -1,5 +1,4 @@
 using Godot;
-using PixelTowns.InventoryManagement;
 
 namespace PixelTowns;
 
@@ -8,8 +7,8 @@ public partial class SaveFile : Resource
 {
 	private const string SavesDir = "user://saves";
 	private const string DefaultFile = "testSave";
-	
-	[Export] public InventoryData InventoryData;
+
+	[Export] public PlayerData PlayerData;
 	
 	public void SaveGame(string name = DefaultFile)
 	{
@@ -32,6 +31,6 @@ public partial class SaveFile : Resource
 
 	public void ApplyData()
 	{
-		GameManager.UI.Inventory.PopulateInventory(InventoryData);
+		GameManager.UI.Inventory.PopulateInventory(PlayerData.InventoryData);
 	}
 }

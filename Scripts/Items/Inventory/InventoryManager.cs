@@ -50,7 +50,7 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
     public void PopulateInventory(InventoryData inventoryData)
     {
         toolbelt.SetContainerData(inventoryData.ToolbeltData, slotPrefab);
-        inventory.SetData(inventoryData, slotPrefab);
+        inventory.SetData(inventoryData);
         toolbelt.SelectSlotAtIndex(0);
     }
 

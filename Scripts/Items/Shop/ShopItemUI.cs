@@ -9,11 +9,11 @@ public partial class ShopItemUI : Control
     [Export] private Label nameLabel;
     [Export] private Label costLabel;
 
-    private ShopItemData shopItemData;
+    public ShopItemData ShopItemData { get; private set; }
 
     internal interface IObserver
     {
-        void OnShopItemClicked(ShopItemUI shopItemUi);
+        void OnShopItemClicked(ShopItemUI shopItemUi, bool isAlternate);
     }
 
     private readonly List<IObserver> observers = new List<IObserver>();
@@ -23,7 +23,26 @@ public partial class ShopItemUI : Control
     
     internal void Populate(ShopItemData shopItemData)
     {
-        this.shopItemData = shopItemData;
+        ShopItemData = shopItemData;
         icon.Texture = shopItemData.ItemData.GetIcon();
+        nameLabel.Text = shopItemData.ItemData.ResourceName;
+        costLabel.Text = $"{shopItemData.ItemData.GoldCost} G";
+
+        SizeFlagsHorizontal = SizeFlags.ExpandFill;
+    }
+    
+    public override void _GuiInput(InputEvent @event)
+    {
+        if (@event is InputEventMouseButton mb)
+        {
+            if (mb.Pressed && mb.ButtonIndex == MouseButton.Left)
+            {
+                observers.ForEach(o => o.OnShopItemClicked(this, false));
+            }
+            else if (mb.Pressed && mb.ButtonIndex == MouseButton.Right)
+            {
+                observers.ForEach(o => o.OnShopItemClicked(this, true));
+            }
+        }
     }
 }

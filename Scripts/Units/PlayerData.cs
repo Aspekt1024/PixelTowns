@@ -1,6 +1,12 @@
-﻿namespace PixelTowns;
+﻿using Godot;
+using PixelTowns.InventoryManagement;
+using PixelTowns.Items;
 
-public class PlayerData
+namespace PixelTowns;
+
+[GlobalClass]
+public partial class PlayerData : Resource
 {
-    
+    [Export] public InventoryData InventoryData;
+    [Export] public CurrencyData CurrencyData;
 }

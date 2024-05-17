@@ -12,6 +12,7 @@ public partial class Inventory : Control
 {
     [Export] private ItemContainer toolbeltContainer;
     [Export] private ItemContainer backpackContainer;
+    [Export] private PackedScene slotPrefab;
 
     internal void RegisterObserver(ItemContainer.IObserver observer)
     {
@@ -19,7 +20,13 @@ public partial class Inventory : Control
         backpackContainer.RegisterObserver(observer);
     }
 
-    public void SetData(InventoryData inventoryData, PackedScene slotPrefab)
+    internal void UnregisterObserver(ItemContainer.IObserver observer)
+    {
+        toolbeltContainer.UnregisterObserver(observer);
+        backpackContainer.UnregisterObserver(observer);
+    }
+
+    public void SetData(InventoryData inventoryData)
     {
         toolbeltContainer.SetContainerData(inventoryData.ToolbeltData, slotPrefab);
         backpackContainer.SetContainerData(inventoryData.BackpackData, slotPrefab);
