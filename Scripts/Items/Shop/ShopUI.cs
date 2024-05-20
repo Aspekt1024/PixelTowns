@@ -13,6 +13,7 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
     [Export] private VBoxContainer shopItemContainer;
     [Export] private PackedScene shopItemPrefab;
     [Export] private Inventory playerInventory;
+    [Export] private Slot transactionSlot;
 
     [Export] private ShopData testShopData;
 
@@ -22,9 +23,19 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
 
     public override void _Ready()
     {
+        transactionSlot.Hide();
+        transactionSlot.SetTransitionalMode();
         Hide();
     }
-    
+
+    public override void _Process(double delta)
+    {
+        if (transactionSlot.Visible)
+        {
+            transactionSlot.Position = transactionSlot.GetGlobalMousePosition() - transactionSlot.Size / 2f;
+        }
+    }
+
     public void OpenShop(ShopData data, PlayerData playerData)
     {
         this.playerData = playerData;
@@ -74,14 +85,32 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         int quantity = isAlternate ? 5 : 1;
         if (currencyData.TryPurchase(shopItem.ShopItemData.ItemData, quantity))
         {
-            // TODO add item to cursor
             GD.Print($"purchased {quantity} {shopItem.ShopItemData.ItemData.ResourceName}");
+            transactionSlot.Show();
+            if (transactionSlot.IsEmpty())
+            {
+                transactionSlot.SetSlotData(new SlotData(shopItem.ShopItemData.ItemData, quantity, 0));   
+            }
+            else if (transactionSlot.ItemData == shopItem.ShopItemData.ItemData)
+            {
+                transactionSlot.SlotData.AddQuantity(quantity);
+            }
         }
     }
     
     public void OnSlotClicked(ItemContainer itemContainer, Slot slot)
     {
         // TODO highlight item and sell button?
+        int remainingQuantity = itemContainer.AddItem(transactionSlot.ItemData, transactionSlot.SlotData.Quantity);
+        if (remainingQuantity > 0)
+        {
+            transactionSlot.SlotData.SetQuantity(remainingQuantity);
+        }
+        else
+        {
+            transactionSlot.Clear();
+            transactionSlot.Hide();
+        }
     }
 
     public void OnSelectedItemRemoved()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://y2f1frqpn4t7"]
+[gd_scene load_steps=11 format=3 uid="uid://y2f1frqpn4t7"]
 
 [ext_resource type="Script" path="res://Scripts/Items/Shop/ShopUI.cs" id="1_0t2fj"]
 [ext_resource type="PackedScene" uid="uid://cyfi51eiq6sa0" path="res://Prefabs/UI/ShopItem.tscn" id="1_8ufgo"]
@@ -7,12 +7,18 @@
 [ext_resource type="Resource" uid="uid://duy4uudx53yiy" path="res://Data/Shop/testShopData.tres" id="3_ttj3j"]
 [ext_resource type="FontFile" uid="uid://vhr6ypk4dq3i" path="res://Art/Imported/Fonts/minecraft-font/MinecraftBold-nMK1.otf" id="4_7w0q4"]
 [ext_resource type="FontFile" uid="uid://coerlu6etwe6v" path="res://Art/Imported/Fonts/minecraft-font/MinecraftRegular-Bmg3.otf" id="5_fcht0"]
+[ext_resource type="PackedScene" uid="uid://bhqkd3nta8n1y" path="res://Prefabs/UI/Slot.tscn" id="8_pl6xf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_80liy"]
 atlas = ExtResource("1_lyvxa")
 region = Rect2(144, 144, 16, 16)
 
-[node name="ShopUi" type="Control" node_paths=PackedStringArray("portrait", "moneyLabel", "greeting", "shopItemContainer", "playerInventory")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxv2h"]
+bg_color = Color(0.341176, 0.360784, 0.819608, 0)
+draw_center = false
+border_color = Color(0.827451, 0.760784, 0.639216, 0)
+
+[node name="ShopUi" type="Control" node_paths=PackedStringArray("portrait", "moneyLabel", "greeting", "shopItemContainer", "playerInventory", "transactionSlot")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -26,6 +32,7 @@ greeting = NodePath("Greeting/MarginContainer/Label")
 shopItemContainer = NodePath("ShopInventory/MarginContainer/VBoxContainer")
 shopItemPrefab = ExtResource("1_8ufgo")
 playerInventory = NodePath("Inventory")
+transactionSlot = NodePath("Slot")
 testShopData = ExtResource("3_ttj3j")
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -196,3 +203,9 @@ offset_left = 1033.0
 offset_top = 690.0
 offset_right = 1598.0
 offset_bottom = 886.0
+
+[node name="Slot" parent="." instance=ExtResource("8_pl6xf")]
+layout_mode = 0
+offset_right = 80.0
+offset_bottom = 80.0
+transitionalStyleBox = SubResource("StyleBoxFlat_sxv2h")

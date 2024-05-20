@@ -45,13 +45,18 @@ public partial class ItemContainerData : Resource
         
         observers.ForEach(o => o.OnSlotDataUpdated(slotData));
     }
-
-    internal void UpdateSlotDataQuantity(SlotData data, int newQuantity)
+    
+    internal int AddQuantityToSlot(SlotData data, int amount)
     {
+        return data.AddQuantity(amount);
+    }
+
+    internal void RemoveQuantityFromSlot(SlotData data, int amount)
+    {
+        int newQuantity = data.Quantity - amount;
         if (newQuantity > 0)
         {
-            data.Quantity = newQuantity;
-            AddSlotData(data);
+            data.SetQuantity(newQuantity);
         }
         else
         {

@@ -123,7 +123,7 @@ namespace PixelTowns.InventoryManagement
 			var index = slots.FindIndex(s => s.ItemData == item);
 			if (index >= 0)
 			{
-				itemContainerData.UpdateSlotDataQuantity(slots[index].SlotData, slots[index].SlotData.Quantity + quantity);
+				int remainingQuantity = itemContainerData.AddQuantityToSlot(slots[index].SlotData, quantity);
 			}
 			else
 			{
@@ -146,11 +146,6 @@ namespace PixelTowns.InventoryManagement
 			itemContainerData.AddSlotData(slotData);
 		}
 
-		internal void UpdateQuantity(SlotData slotData, int newQuantity)
-		{
-			itemContainerData.UpdateSlotDataQuantity(slotData, newQuantity);
-		}
-
 		internal SlotData TakeFromSlot(Slot slot)
 		{
 			SlotData slotData = slot.SlotData;
@@ -162,7 +157,7 @@ namespace PixelTowns.InventoryManagement
 		{
 			if (selectedSlot.ItemData is PlaceableData placeableData)
 			{
-				itemContainerData.UpdateSlotDataQuantity(selectedSlot.SlotData, selectedSlot.SlotData.Quantity - 1);
+				itemContainerData.RemoveQuantityFromSlot(selectedSlot.SlotData, 1);
 			}
 		}
 

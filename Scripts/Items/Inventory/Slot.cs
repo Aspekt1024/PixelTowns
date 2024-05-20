@@ -4,12 +4,13 @@ using PixelTowns.Items;
 
 namespace PixelTowns.InventoryManagement;
 
-public partial class Slot : PanelContainer
+public partial class Slot : PanelContainer, SlotData.IObserver
 {
 	[Export] private TextureRect image;
 	[Export] private Label label;
 	[Export] private StyleBoxFlat unselectedStyleBox;
 	[Export] private StyleBoxFlat selectedStyleBox;
+	[Export] private StyleBoxFlat transitionalStyleBox;
 
 	internal int SlotIndex { get; private set; }
 	internal SlotData SlotData { get; private set; }
@@ -34,18 +35,22 @@ public partial class Slot : PanelContainer
 	internal void SetSlotData(SlotData slotData)
 	{
 		SlotData = slotData;
-		image.Texture = slotData.ItemData.GetIcon();
+		SlotData.RegisterObserver(this);
 
-		if (slotData.ItemData.IsStackable())
-		{
-			label.Text = $"x{slotData.Quantity}";
-			label.Show();	
-		}
-		else
-		{
-			label.Hide();
-		}
+		PopulateUi();
 	}
+
+	/// <summary>
+	/// Sets the mode to transitional, e.g. for moving items around.
+	/// This turns off the border and allows the cursor to click through.
+	/// </summary>
+	internal void SetTransitionalMode()
+	{
+		AddThemeStyleboxOverride("panel", transitionalStyleBox);
+		MouseFilter = MouseFilterEnum.Ignore;
+	}
+
+	internal int AddQuantity(int quantity) => SlotData.AddQuantity(quantity);
 
 	internal bool IsEmpty() => SlotData == null || SlotData.Quantity <= 0;
 
@@ -59,7 +64,12 @@ public partial class Slot : PanelContainer
 		image.Texture = null;
 		label.Text = "";
 		label.Hide();
-		SlotData = null;
+
+		if (SlotData != null)
+		{
+			SlotData.UnregisterObserver(this);
+			SlotData = null;
+		}
 	}
 
 	internal void Unselect()
@@ -80,6 +90,26 @@ public partial class Slot : PanelContainer
 			{
 				observers.ForEach(o => o.OnSlotClicked(this));
 			}
+		}
+	}
+
+	public void OnSlotDataUpdated(SlotData slotData)
+	{
+		PopulateUi();
+	}
+
+	private void PopulateUi()
+	{
+		image.Texture = SlotData.ItemData.GetIcon();
+
+		if (SlotData.ItemData.IsStackable())
+		{
+			label.Text = $"x{SlotData.Quantity}";
+			label.Show();	
+		}
+		else
+		{
+			label.Hide();
 		}
 	}
 }
