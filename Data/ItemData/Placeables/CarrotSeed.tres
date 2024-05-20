@@ -1,8 +1,13 @@
-[gd_resource type="Resource" script_class="PlaceableData" load_steps=6 format=3 uid="uid://bemoil1xqe7fq"]
+[gd_resource type="Resource" script_class="PlaceableData" load_steps=8 format=3 uid="uid://bemoil1xqe7fq"]
 
 [ext_resource type="Resource" uid="uid://6i17iuadhasa" path="res://Data/ItemData/Growables/CarrotData.tres" id="1_3aa8o"]
+[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_066ds"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_sr2qv"]
 [ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="3_qtj08"]
+
+[sub_resource type="Resource" id="Resource_k1ynd"]
+script = ExtResource("2_066ds")
+Key = "ITEM_SEED_CARROT"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_lb8mv"]
 atlas = ExtResource("2_sr2qv")
@@ -17,6 +22,7 @@ script = ExtResource("3_qtj08")
 icon = SubResource("AtlasTexture_lb8mv")
 itemTexture = SubResource("AtlasTexture_vlbkw")
 ItemData = ExtResource("1_3aa8o")
+ItemName = SubResource("Resource_k1ynd")
 MaxStackSize = 99
 GoldCost = 2
 Category = 2000

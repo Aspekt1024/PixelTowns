@@ -25,7 +25,7 @@ public partial class ShopItemUI : Control
     {
         ShopItemData = shopItemData;
         icon.Texture = shopItemData.ItemData.GetIcon();
-        nameLabel.Text = shopItemData.ItemData.ResourceName;
+        nameLabel.Text = shopItemData.ItemData.ItemName.GetTranslation();
         costLabel.Text = $"{shopItemData.ItemData.GoldCost} G";
 
         SizeFlagsHorizontal = SizeFlags.ExpandFill;

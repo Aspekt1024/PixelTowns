@@ -1,8 +1,13 @@
-[gd_resource type="Resource" script_class="PlaceableData" load_steps=6 format=3 uid="uid://ydr7eswfudd5"]
+[gd_resource type="Resource" script_class="PlaceableData" load_steps=8 format=3 uid="uid://ydr7eswfudd5"]
 
 [ext_resource type="Resource" uid="uid://dx2isqafq3qys" path="res://Data/ItemData/Growables/StrawberryData.tres" id="1_tihoc"]
+[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_0v1hb"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_wrs35"]
 [ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="3_pvwng"]
+
+[sub_resource type="Resource" id="Resource_wneu4"]
+script = ExtResource("2_0v1hb")
+Key = "ITEM_SEED_STRAWBERRY"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dgxfq"]
 atlas = ExtResource("2_wrs35")
@@ -17,6 +22,7 @@ script = ExtResource("3_pvwng")
 icon = SubResource("AtlasTexture_dgxfq")
 itemTexture = SubResource("AtlasTexture_kra7c")
 ItemData = ExtResource("1_tihoc")
+ItemName = SubResource("Resource_wneu4")
 MaxStackSize = 99
 GoldCost = 0
 Category = 2000

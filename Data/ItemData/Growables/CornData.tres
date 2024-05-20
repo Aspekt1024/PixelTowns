@@ -1,7 +1,12 @@
-[gd_resource type="Resource" script_class="GrowableData" load_steps=8 format=3 uid="uid://t1o66eamsgat"]
+[gd_resource type="Resource" script_class="GrowableData" load_steps=10 format=3 uid="uid://t1o66eamsgat"]
 
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="1_sghp8"]
 [ext_resource type="Script" path="res://Scripts/Items/Growables/GrowableData.cs" id="2_o27o8"]
+[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_q382e"]
+
+[sub_resource type="Resource" id="Resource_taq73"]
+script = ExtResource("2_q382e")
+Key = "ITEM_CORN"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ne033"]
 atlas = ExtResource("1_sghp8")
@@ -43,6 +48,7 @@ animations = [{
 script = ExtResource("2_o27o8")
 DaysToGrow = 10
 SpriteFrames = SubResource("SpriteFrames_ovt7m")
+ItemName = SubResource("Resource_taq73")
 MaxStackSize = 99
 GoldCost = 0
 Category = 3000

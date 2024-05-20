@@ -1,6 +1,6 @@
 using Godot;
+using Godot.Collections;
 using PixelTowns;
-using PixelTowns.InventoryManagement;
 using PixelTowns.UI;
 
 public partial class GameManager : Node
@@ -100,6 +100,13 @@ public partial class GameManager : Node
 		return instance.resources.chicken.Instantiate<Chicken>();
 	}
 
-	
+	public override Array<Dictionary> _GetPropertyList()
+	{
+		var props = base._GetPropertyList();
+		var l = TranslationServer.GetLocale();
+		var to = TranslationServer.GetTranslationObject(l);
+		GD.Print(to.GetMessageCount());
+		return props;
+	}
 }
 

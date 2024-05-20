@@ -1,4 +1,5 @@
 ﻿using Godot;
+using PixelTowns.Translation;
 
 namespace PixelTowns.Items;
 
@@ -12,6 +13,8 @@ public enum ItemCategory
 
 public abstract partial class ItemData : Resource
 {
+    [Export] public TranslationKey ItemName = new TranslationKey();
+    
     /// <summary>
     /// Maximum amount this item can be stored in an inventory.
     /// Zero or 1 for not stackable.
