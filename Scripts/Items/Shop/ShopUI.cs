@@ -100,8 +100,20 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
     
     public void OnSlotClicked(ItemContainer itemContainer, Slot slot)
     {
-        // TODO highlight item and sell button?
-        int remainingQuantity = itemContainer.AddItem(transactionSlot.ItemData, transactionSlot.SlotData.Quantity);
+        if (!transactionSlot.IsEmpty())
+        {
+            AddTransactionItemToSlot(slot);
+        }
+        else
+        {
+            GD.Print("clicked inventory slot");
+        }
+        
+    }
+
+    private void AddTransactionItemToSlot(Slot slot)
+    {
+        int remainingQuantity = slot.AddItem(transactionSlot.ItemData, transactionSlot.SlotData.Quantity);
         if (remainingQuantity > 0)
         {
             transactionSlot.SlotData.SetQuantity(remainingQuantity);

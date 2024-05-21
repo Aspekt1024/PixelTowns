@@ -18,6 +18,7 @@ public partial class Slot : PanelContainer, SlotData.IObserver
 	internal interface IObserver
 	{
 		void OnSlotClicked(Slot slot);
+		void OnSlotDataCreated(Slot slot, SlotData slotData);
 	}
 	
 	private readonly List<IObserver> observers = new List<IObserver>();
@@ -53,6 +54,22 @@ public partial class Slot : PanelContainer, SlotData.IObserver
 	internal int AddQuantity(int quantity) => SlotData.AddQuantity(quantity);
 
 	internal bool IsEmpty() => SlotData == null || SlotData.Quantity <= 0;
+
+	internal int AddItem(ItemData itemData, int quantity)
+	{
+		if (IsEmpty())
+		{
+			SlotData = new SlotData(itemData, quantity, SlotIndex);
+			observers.ForEach(o => o.OnSlotDataCreated(this, SlotData));
+			return 0;
+		}
+		else if (itemData == ItemData)
+		{
+			return SlotData.AddQuantity(quantity);
+		}
+		
+		return quantity;
+	}
 
 	internal bool CanRemoveQuantity(int amount)
 	{

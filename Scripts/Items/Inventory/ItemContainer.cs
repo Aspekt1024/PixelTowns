@@ -176,6 +176,11 @@ namespace PixelTowns.InventoryManagement
 			observers.ForEach(o => o.OnSlotClicked(this, slot));
 		}
 
+		public void OnSlotDataCreated(Slot slot, SlotData slotData)
+		{
+			itemContainerData.AddSlotData(slotData);
+		}
+
 		public void OnSlotDataUpdated(SlotData slotData)
 		{
 			slots[slotData.SlotIndex].SetSlotData(slotData);
