@@ -35,12 +35,16 @@ public partial class CurrencyData : Resource
         if (Gold >= goldCost)
         {
             Gold -= goldCost;
-            GD.Print($"gold = {Gold}");
             return true;
         }
         else
         {
             return false;
         }
+    }
+
+    public void AddGold(int amount)
+    {
+        Gold += amount;
     }
 }

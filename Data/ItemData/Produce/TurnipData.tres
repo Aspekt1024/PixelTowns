@@ -50,5 +50,5 @@ DaysToGrow = 10
 SpriteFrames = SubResource("SpriteFrames_pupsf")
 ItemName = SubResource("Resource_taq73")
 MaxStackSize = 99
-GoldCost = 0
+GoldCost = 2
 Category = 3000

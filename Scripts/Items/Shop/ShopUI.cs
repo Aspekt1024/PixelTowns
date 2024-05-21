@@ -85,7 +85,6 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         int quantity = isAlternate ? 5 : 1;
         if (currencyData.TryPurchase(shopItem.ShopItemData.ItemData, quantity))
         {
-            GD.Print($"purchased {quantity} {shopItem.ShopItemData.ItemData.ResourceName}");
             transactionSlot.Show();
             if (transactionSlot.IsEmpty())
             {
@@ -98,17 +97,29 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         }
     }
     
-    public void OnSlotClicked(ItemContainer itemContainer, Slot slot)
+    public void OnSlotLeftClicked(ItemContainer itemContainer, Slot slot)
     {
         if (!transactionSlot.IsEmpty())
         {
             AddTransactionItemToSlot(slot);
         }
+    }
+
+    public void OnSlotRightClicked(ItemContainer itemContainer, Slot slot)
+    {
+        if (slot.IsEmpty()) return;
+        
+        // TODO check if the item category / item is sellable
+        if (slot.ItemData.Category == ItemCategory.Produce)
+        {
+            SlotData slotData = itemContainer.TakeFromSlot(slot);
+            int gold = slotData.ItemData.GoldCost * slotData.Quantity;
+            GameManager.SaveFile.PlayerData.CurrencyData.AddGold(gold);
+        }
         else
         {
-            GD.Print("clicked inventory slot");
+            GD.Print($"Cannot sell {slot.ItemData.GetName()} here.");
         }
-        
     }
 
     private void AddTransactionItemToSlot(Slot slot)

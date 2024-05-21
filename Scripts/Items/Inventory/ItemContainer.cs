@@ -15,7 +15,8 @@ namespace PixelTowns.InventoryManagement
 		
 		internal interface IObserver
 		{
-			void OnSlotClicked(ItemContainer itemContainer, Slot slot);
+			void OnSlotLeftClicked(ItemContainer itemContainer, Slot slot);
+			void OnSlotRightClicked(ItemContainer itemContainer, Slot slot);
 			void OnSelectedItemRemoved();
 		} 
 
@@ -171,9 +172,14 @@ namespace PixelTowns.InventoryManagement
 			Visible = !Visible;
 		}
 
-		public void OnSlotClicked(Slot slot)
+		public void OnSlotLeftClicked(Slot slot)
 		{
-			observers.ForEach(o => o.OnSlotClicked(this, slot));
+			observers.ForEach(o => o.OnSlotLeftClicked(this, slot));
+		}
+
+		public void OnSlotRightClicked(Slot slot)
+		{
+			observers.ForEach(o => o.OnSlotRightClicked(this, slot));
 		}
 
 		public void OnSlotDataCreated(Slot slot, SlotData slotData)

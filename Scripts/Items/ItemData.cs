@@ -27,5 +27,10 @@ public abstract partial class ItemData : Resource
     
     public abstract Texture2D GetIcon();
 
+    /// <summary>
+    /// Gets the name of the item from the translation server
+    /// </summary>
+    public string GetName() => ItemName.GetTranslation();
+
     public bool IsStackable() => MaxStackSize > 1;
 }

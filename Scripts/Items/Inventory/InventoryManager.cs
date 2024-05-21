@@ -54,7 +54,7 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
         toolbelt.SelectSlotAtIndex(0);
     }
 
-    public void OnSlotClicked(ItemContainer itemContainer, Slot slot)
+    public void OnSlotLeftClicked(ItemContainer itemContainer, Slot slot)
     {
         if (heldSlot == null && slot.ItemData != null)
         {
@@ -77,6 +77,11 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
                 TryStackHeldItem(itemContainer, slot);
             }
         }
+    }
+
+    public void OnSlotRightClicked(ItemContainer itemContainer, Slot slot)
+    {
+        // NA for inventory
     }
 
     private void TryStackHeldItem(ItemContainer itemContainer, Slot slot)

@@ -1,27 +1,27 @@
 [gd_resource type="Resource" script_class="GrowableData" load_steps=10 format=3 uid="uid://t1o66eamsgat"]
 
-[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="1_sghp8"]
-[ext_resource type="Script" path="res://Scripts/Items/Growables/GrowableData.cs" id="2_o27o8"]
-[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_q382e"]
+[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="1_rf41w"]
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_hs7q2"]
+[ext_resource type="Script" path="res://Scripts/Items/Growables/GrowableData.cs" id="3_qge5q"]
 
 [sub_resource type="Resource" id="Resource_taq73"]
-script = ExtResource("2_q382e")
+script = ExtResource("1_rf41w")
 Key = "ITEM_CORN"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ne033"]
-atlas = ExtResource("1_sghp8")
+atlas = ExtResource("2_hs7q2")
 region = Rect2(80, 64, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4j8rq"]
-atlas = ExtResource("1_sghp8")
+atlas = ExtResource("2_hs7q2")
 region = Rect2(64, 64, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gab0x"]
-atlas = ExtResource("1_sghp8")
+atlas = ExtResource("2_hs7q2")
 region = Rect2(48, 64, 16, 16)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a0gxx"]
-atlas = ExtResource("1_sghp8")
+atlas = ExtResource("2_hs7q2")
 region = Rect2(32, 64, 16, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ovt7m"]
@@ -45,10 +45,10 @@ animations = [{
 }]
 
 [resource]
-script = ExtResource("2_o27o8")
+script = ExtResource("3_qge5q")
 DaysToGrow = 10
 SpriteFrames = SubResource("SpriteFrames_ovt7m")
 ItemName = SubResource("Resource_taq73")
 MaxStackSize = 99
-GoldCost = 0
+GoldCost = 4
 Category = 3000

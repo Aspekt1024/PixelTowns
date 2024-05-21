@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlaceableData" load_steps=8 format=3 uid="uid://d0utdotp275li"]
 
-[ext_resource type="Resource" uid="uid://t1o66eamsgat" path="res://Data/ItemData/Growables/CornData.tres" id="1_ew56f"]
+[ext_resource type="Resource" uid="uid://t1o66eamsgat" path="res://Data/ItemData/Produce/CornData.tres" id="1_ew56f"]
 [ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_7xqtt"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_kg0th"]
 [ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="3_qvhm0"]

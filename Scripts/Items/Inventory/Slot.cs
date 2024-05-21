@@ -17,7 +17,8 @@ public partial class Slot : PanelContainer, SlotData.IObserver
 	
 	internal interface IObserver
 	{
-		void OnSlotClicked(Slot slot);
+		void OnSlotLeftClicked(Slot slot);
+		void OnSlotRightClicked(Slot slot);
 		void OnSlotDataCreated(Slot slot, SlotData slotData);
 	}
 	
@@ -105,7 +106,11 @@ public partial class Slot : PanelContainer, SlotData.IObserver
 		{
 			if (mb.Pressed && mb.ButtonIndex == MouseButton.Left)
 			{
-				observers.ForEach(o => o.OnSlotClicked(this));
+				observers.ForEach(o => o.OnSlotLeftClicked(this));
+			}
+			else if (mb.Pressed && mb.ButtonIndex == MouseButton.Right)
+			{
+				observers.ForEach(o => o.OnSlotRightClicked(this));
 			}
 		}
 	}
