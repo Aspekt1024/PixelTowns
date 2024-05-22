@@ -36,9 +36,9 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         }
     }
 
-    public void OpenShop(ShopData data, PlayerData playerData)
+    public void OpenShop(ShopData data)
     {
-        this.playerData = playerData;
+        playerData = GameManager.SaveFile.PlayerData;
         if (data == null)
         {
             data = testShopData;

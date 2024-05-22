@@ -55,23 +55,12 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 		if (Input.IsActionJustPressed(InputActions.Exit))
 		{
 			GameManager.UI.Inventory.HideInventory();
+			GameManager.UI.Shop.CloseShop();
 		}
 
 		if (Input.IsActionJustPressed(InputActions.DebugAdd))
 		{
 			GameManager.SaveFile.SaveGame();
-		}
-
-		if (Input.IsActionJustPressed(InputActions.Shop))
-		{
-			if (GameManager.UI.Shop.Visible)
-			{
-				GameManager.UI.Shop.CloseShop();
-			}
-			else
-			{
-				GameManager.UI.Shop.OpenShop(null, GameManager.SaveFile.PlayerData);
-			}
 		}
 	}
 

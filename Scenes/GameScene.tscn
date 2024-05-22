@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://c4y4218011xju"]
+[gd_scene load_steps=21 format=3 uid="uid://c4y4218011xju"]
 
 [ext_resource type="Texture2D" uid="uid://da4brpvqyjo27" path="res://Art/Imported/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_fvejh"]
 [ext_resource type="Script" path="res://Scripts/Units/Player.cs" id="1_o57kg"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://03cpatnf1bvn" path="res://Art/Imported/Tiny garden_free pack/character_walking_front.png" id="5_h4wic"]
 [ext_resource type="Texture2D" uid="uid://cexedsjvcqr8c" path="res://Art/dirtgrass.png" id="6_fdhqg"]
 [ext_resource type="PackedScene" uid="uid://ynaa5b5rupgr" path="res://Prefabs/UI/UI.tscn" id="11_aqhko"]
+[ext_resource type="Script" path="res://Scripts/World/InteractionPoint.cs" id="11_dlj3u"]
+[ext_resource type="Resource" uid="uid://duy4uudx53yiy" path="res://Data/Shop/testShopData.tres" id="12_d007c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hh4um"]
 resource_name = "KenneyAdventure"
@@ -1634,22 +1636,22 @@ sources/0 = SubResource("TileSetAtlasSource_hh4um")
 sources/1 = SubResource("TileSetAtlasSource_dctxv")
 sources/2 = SubResource("TileSetAtlasSource_ceyf4")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7nc6g"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wreou"]
 size = Vector2(18, 23)
 
 [node name="GameScene" type="Node2D"]
 
-[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("worldGrid", "player", "ui", "camera")]
+[node name="GameManager" type="Node" parent="." node_paths=PackedStringArray("worldGrid", "player", "camera")]
 script = ExtResource("1_tc4xl")
 worldGrid = NodePath("../WorldGrid")
 player = NodePath("../Player")
 configuration = ExtResource("2_0amof")
 resources = ExtResource("3_hv6cr")
-ui = NodePath("../Ui")
+uiPrefab = ExtResource("11_aqhko")
 camera = NodePath("../Player/Camera2D")
 startingPlayerData = ExtResource("4_iexxg")
-
-[node name="Ui" parent="." instance=ExtResource("11_aqhko")]
 
 [node name="WorldGrid" type="TileMap" parent="." node_paths=PackedStringArray("cursor")]
 tile_set = SubResource("TileSet_cnu4e")
@@ -1666,6 +1668,15 @@ cursor = NodePath("Cursor")
 modulate = Color(0, 0, 0, 0.513726)
 position = Vector2(124, 63)
 texture = ExtResource("2_bkfcs")
+
+[node name="Area2D" type="Area2D" parent="WorldGrid" node_paths=PackedStringArray("collision")]
+position = Vector2(265, 70)
+script = ExtResource("11_dlj3u")
+shopData = ExtResource("12_d007c")
+collision = NodePath(".")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldGrid/Area2D"]
+shape = SubResource("RectangleShape2D_7nc6g")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(49, 38)
@@ -1687,3 +1698,5 @@ zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[connection signal="body_entered" from="WorldGrid/Area2D" to="WorldGrid/Area2D" method="OnBodyEntered"]

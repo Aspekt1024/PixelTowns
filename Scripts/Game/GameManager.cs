@@ -9,7 +9,7 @@ public partial class GameManager : Node
 	[Export] private Player player;
 	[Export] private GameConfiguration configuration;
 	[Export] private GameResources resources;
-	[Export] private UIManager ui;
+	[Export] private PackedScene uiPrefab;
 	[Export] private Camera2D camera;
 	
 	[Export] private PlayerData startingPlayerData;
@@ -26,6 +26,8 @@ public partial class GameManager : Node
 	public static UIManager UI => instance.ui;
 	public static Camera2D Camera => instance.camera;
 	public static SaveFile SaveFile => instance.saveFile;
+
+	private UIManager ui;
 	
 	public GameManager()
 	{
@@ -35,6 +37,9 @@ public partial class GameManager : Node
 
 	public override void _Ready()
 	{
+		ui = uiPrefab.Instantiate<UIManager>();
+		AddChild(ui);
+        
 		saveFile = SaveFile.Load() ?? new SaveFile()
 		{
 			PlayerData = startingPlayerData,
