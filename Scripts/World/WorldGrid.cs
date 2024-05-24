@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
+using PixelTowns.InventoryManagement;
 using PixelTowns.Items;
 using PixelTowns.World;
 
@@ -123,7 +124,9 @@ public partial class WorldGrid : TileMap
 		Growable growable = growables[growableIndex].Growable;
 		if (growable.IsGrown)
 		{
-			GameManager.UI.Inventory.AddItem(growable.GrowableData, 1);
+			// TODO instead we should just change the inventory data and use events to drive the inventory manager
+			// TODO we may need to rethink InventoryManager being a UI
+			GameManager.UI.GetUi<InventoryManager>().AddItem(growable.GrowableData, 1);
 			growables[growableIndex].Growable.QueueFree();
 			growables.RemoveAt(growableIndex);
 		}

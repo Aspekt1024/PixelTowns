@@ -4,9 +4,9 @@ using PixelTowns.Items;
 
 namespace PixelTowns;
 
-public partial class Player : CharacterBody2D, InventoryManager.IObserver
+public partial class Player : CharacterBody2D, InventoryManager.IObserver, PlayerInputMap.IObserver
 {
-	[Export] private float Speed = 100f;
+	[Export] private float speed = 100f;
 
 	private Vector2 velocity = Vector2.Zero;
 	
@@ -21,59 +21,14 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 
 	public override void _Ready()
 	{
-		GameManager.UI.Inventory.RegisterObserver(this);
-	}
-
-	public override void _Process(double delta)
-	{
-		if (Input.IsActionJustPressed(InputActions.Use))
-		{
-			// TODO move usage to the selected item instead of having the player deal with different types and worrying about input modes.
-			if (inputMode == InputMode.Till)
-			{
-				GameManager.WorldGrid.TillSoil();
-			}
-			else if (inputMode == InputMode.Plant)
-			{
-				bool success = GameManager.WorldGrid.TryPlaceItem(GameManager.UI.Inventory.GetSelectedToolbeltItemData() as PlaceableData);
-				if (success)
-				{
-					GameManager.UI.Inventory.UseSelectedToolbeltItem();
-				}
-			}
-		}
-		else if (Input.IsActionJustPressed(InputActions.Interact))
-		{
-			GameManager.WorldGrid.GatherVegetable();
-		}
-
-		if (Input.IsActionJustPressed(InputActions.Inventory))
-		{
-			GameManager.UI.Inventory.ToggleInventory();
-		}
-
-		if (Input.IsActionJustPressed(InputActions.Exit))
-		{
-			GameManager.UI.Inventory.HideInventory();
-			GameManager.UI.Shop.CloseShop();
-		}
-
-		if (Input.IsActionJustPressed(InputActions.DebugAdd))
-		{
-			GameManager.SaveFile.SaveGame();
-		}
+		GameManager.UI.GetUi<InventoryManager>().RegisterObserver(this);
+		GameManager.Input.PlayerMap.RegisterObserver(this);
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		velocity = Vector2.Zero;
-		
-		Vector2 inputVector = Vector2.Zero;
-		inputVector.X = Input.GetActionStrength(InputActions.MoveRight) - Input.GetActionStrength(InputActions.MoveLeft);
-		inputVector.Y = Input.GetActionStrength(InputActions.MoveDown) - Input.GetActionStrength(InputActions.MoveUp);
-
-		velocity = inputVector.Normalized() * Speed * (float)delta;
-
+		Vector2 inputVector = GameManager.Input.PlayerMap.GetMovementAxis();
+		velocity = inputVector * speed * (float)delta;
 		MoveAndCollide(velocity);
 	}
 	
@@ -102,6 +57,29 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 		else
 		{
 			inputMode = InputMode.None;
+		}
+	}
+
+	public void OnInteractPressed()
+	{
+		GameManager.WorldGrid.GatherVegetable();
+	}
+
+	public void OnUsePressed()
+	{
+		// TODO move usage to the selected item instead of having the player deal with different types and worrying about input modes.
+		if (inputMode == InputMode.Till)
+		{
+			GameManager.WorldGrid.TillSoil();
+		}
+		else if (inputMode == InputMode.Plant)
+		{
+			InventoryManager inventory = GameManager.UI.GetUi<InventoryManager>();
+			bool success = GameManager.WorldGrid.TryPlaceItem(inventory.GetSelectedToolbeltItemData() as PlaceableData);
+			if (success)
+			{
+				inventory.UseSelectedToolbeltItem();
+			}
 		}
 	}
 }

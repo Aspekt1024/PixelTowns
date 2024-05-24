@@ -18,7 +18,7 @@ public partial class TranslationKeyPlugin : EditorInspectorPlugin
 
     public override bool _ParseProperty(GodotObject @object, Variant.Type type, string name, PropertyHint hintType, string hintString, PropertyUsageFlags usageFlags, bool wide)
     {
-        if (@object.Get(name).Obj is TranslationKey tk)
+        if (@object?.Get(name).Obj is TranslationKey tk)
         {
             if (translationKeys == null || !translationKeys.Any())
             {

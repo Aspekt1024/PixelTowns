@@ -7,12 +7,13 @@
 [ext_resource type="PackedScene" uid="uid://bhqkd3nta8n1y" path="res://Prefabs/UI/Slot.tscn" id="5_jxey7"]
 [ext_resource type="PackedScene" uid="uid://y2f1frqpn4t7" path="res://Prefabs/UI/ShopUI.tscn" id="6_cdq0y"]
 
-[node name="Ui" type="CanvasLayer" node_paths=PackedStringArray("Inventory", "Shop")]
+[node name="Ui" type="CanvasLayer" node_paths=PackedStringArray("UiList")]
 script = ExtResource("1_pk3xh")
-Inventory = NodePath("InventoryManager")
-Shop = NodePath("ShopUi")
+UiList = [NodePath("InventoryManager"), NodePath("ShopUi")]
 
-[node name="InventoryManager" type="Node" parent="." node_paths=PackedStringArray("toolbelt", "inventory")]
+[node name="InventoryManager" type="Control" parent="." node_paths=PackedStringArray("toolbelt", "inventory")]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("2_kks8i")
 toolbelt = NodePath("../Panel/Toolbelt")
 inventory = NodePath("../Panel/Inventory")
