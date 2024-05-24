@@ -23,8 +23,8 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
     public void RegisterObserver(IObserver observer) => observers.Add(observer);
     public void UnregisterObserver(IObserver observer) => observers.Remove(observer);
 
-    private Slot heldItemSlot;
-    private Slot heldSlot;
+    private Slot heldItemSlot; // Movable slot for moving things around
+    private Slot heldSlot; // Reference to the slot in an inventory that was clicked, used by heldItemSlot
     
     public override void _Ready()
     {
@@ -50,11 +50,11 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
     public void PopulateInventory(InventoryData inventoryData)
     {
         toolbelt.SetContainerData(inventoryData.ToolbeltData, slotPrefab);
-        inventory.SetData(inventoryData, slotPrefab);
+        inventory.SetData(inventoryData);
         toolbelt.SelectSlotAtIndex(0);
     }
 
-    public void OnSlotClicked(ItemContainer itemContainer, Slot slot)
+    public void OnSlotLeftClicked(ItemContainer itemContainer, Slot slot)
     {
         if (heldSlot == null && slot.ItemData != null)
         {
@@ -79,22 +79,22 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
         }
     }
 
+    public void OnSlotRightClicked(ItemContainer itemContainer, Slot slot)
+    {
+        // NA for inventory
+    }
+
     private void TryStackHeldItem(ItemContainer itemContainer, Slot slot)
     {
         if (slot.ItemData != heldItemSlot.ItemData) return;
-        
-        int remainingStackSize = slot.ItemData.MaxStackSize - slot.SlotData.Quantity;
-        if (remainingStackSize <= 0) return;
-        
-        int remainingQuantity = heldItemSlot.SlotData.Quantity - remainingStackSize;
+
+        int remainingQuantity = slot.SlotData.AddQuantity(heldItemSlot.SlotData.Quantity);
         if (remainingQuantity > 0)
         {
-            heldItemSlot.SlotData.Quantity = remainingQuantity;
-            itemContainer.UpdateQuantity(slot.SlotData, slot.ItemData.MaxStackSize);
+            heldItemSlot.SlotData.SetQuantity(remainingQuantity);
         }
         else
         {
-            itemContainer.UpdateQuantity(slot.SlotData, slot.SlotData.Quantity + heldItemSlot.SlotData.Quantity);
             ClearHeldItemSlot();
         }
         

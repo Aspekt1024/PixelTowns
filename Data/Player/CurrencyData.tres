@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CurrencyData" load_steps=2 format=3 uid="uid://p6spx2ja8wi3"]
+
+[ext_resource type="Script" path="res://Scripts/Items/CurrencyData.cs" id="1_ayq86"]
+
+[resource]
+script = ExtResource("1_ayq86")
+gold = 10
+soulCoins = 0

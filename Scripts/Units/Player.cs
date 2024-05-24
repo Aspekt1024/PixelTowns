@@ -55,6 +55,7 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver
 		if (Input.IsActionJustPressed(InputActions.Exit))
 		{
 			GameManager.UI.Inventory.HideInventory();
+			GameManager.UI.Shop.CloseShop();
 		}
 
 		if (Input.IsActionJustPressed(InputActions.DebugAdd))

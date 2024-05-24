@@ -1,8 +1,13 @@
-[gd_resource type="Resource" script_class="PlaceableData" load_steps=6 format=3 uid="uid://dggmohq05gt2d"]
+[gd_resource type="Resource" script_class="PlaceableData" load_steps=8 format=3 uid="uid://dggmohq05gt2d"]
 
-[ext_resource type="Resource" uid="uid://b4k5b6dgkwb7y" path="res://Data/ItemData/Growables/TurnipData.tres" id="1_54w0g"]
+[ext_resource type="Resource" uid="uid://b4k5b6dgkwb7y" path="res://Data/ItemData/Produce/TurnipData.tres" id="1_54w0g"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_52t7s"]
+[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_g4ee8"]
 [ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="3_cb102"]
+
+[sub_resource type="Resource" id="Resource_fi0qs"]
+script = ExtResource("2_g4ee8")
+Key = "ITEM_SEED_TURNIP"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7uo1b"]
 atlas = ExtResource("2_52t7s")
@@ -17,4 +22,7 @@ script = ExtResource("3_cb102")
 icon = SubResource("AtlasTexture_7uo1b")
 itemTexture = SubResource("AtlasTexture_hcs00")
 ItemData = ExtResource("1_54w0g")
+ItemName = SubResource("Resource_fi0qs")
 MaxStackSize = 99
+GoldCost = 0
+Category = 2000

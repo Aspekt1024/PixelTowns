@@ -1,0 +1,79 @@
+[gd_scene load_steps=6 format=3 uid="uid://cyfi51eiq6sa0"]
+
+[ext_resource type="Texture2D" uid="uid://epap32m74g06" path="res://Art/Imported/Icons/Fantasy_Eggs/images/03.png" id="1_bhlpv"]
+[ext_resource type="Script" path="res://Scripts/Items/Shop/ShopItemUI.cs" id="1_rsh8q"]
+[ext_resource type="FontFile" uid="uid://coerlu6etwe6v" path="res://Art/Imported/Fonts/minecraft-font/MinecraftRegular-Bmg3.otf" id="2_2hit0"]
+[ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_ueujl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vae03"]
+atlas = ExtResource("2_ueujl")
+region = Rect2(144, 144, 16, 16)
+
+[node name="ShopItem" type="Control" node_paths=PackedStringArray("icon", "nameLabel", "costLabel")]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -50.0
+offset_right = 400.0
+grow_vertical = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+mouse_default_cursor_shape = 2
+script = ExtResource("1_rsh8q")
+icon = NodePath("NinePatchRect/MarginContainer/HBoxContainer/TextureRect")
+nameLabel = NodePath("NinePatchRect/MarginContainer/HBoxContainer/ItemName")
+costLabel = NodePath("NinePatchRect/MarginContainer/Cost")
+
+[node name="NinePatchRect" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("AtlasTexture_vae03")
+patch_margin_left = 3
+patch_margin_top = 3
+patch_margin_right = 3
+patch_margin_bottom = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="NinePatchRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TextureRect" type="TextureRect" parent="NinePatchRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("1_bhlpv")
+expand_mode = 2
+stretch_mode = 5
+
+[node name="ItemName" type="Label" parent="NinePatchRect/MarginContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_2hit0")
+theme_override_font_sizes/font_size = 30
+text = "Item Name"
+
+[node name="Cost" type="Label" parent="NinePatchRect/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_2hit0")
+theme_override_font_sizes/font_size = 30
+text = "5g"

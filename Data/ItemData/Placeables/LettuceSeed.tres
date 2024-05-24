@@ -1,8 +1,13 @@
-[gd_resource type="Resource" script_class="PlaceableData" load_steps=6 format=3 uid="uid://cujl0lgb8mbpr"]
+[gd_resource type="Resource" script_class="PlaceableData" load_steps=8 format=3 uid="uid://cujl0lgb8mbpr"]
 
-[ext_resource type="Resource" uid="uid://bsjx7kevdkmot" path="res://Data/ItemData/Growables/LettuceData.tres" id="1_5n0x1"]
+[ext_resource type="Resource" uid="uid://bsjx7kevdkmot" path="res://Data/ItemData/Produce/LettuceData.tres" id="1_5n0x1"]
 [ext_resource type="Script" path="res://Scripts/Items/Placeables/PlaceableData.cs" id="1_e6ncs"]
+[ext_resource type="Script" path="res://addons/pixelTownsPlugin/Translations/TranslationKey.cs" id="2_msnot"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="2_omm60"]
+
+[sub_resource type="Resource" id="Resource_njl6l"]
+script = ExtResource("2_msnot")
+Key = "ITEM_SEED_LETTUCE"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nnah2"]
 atlas = ExtResource("2_omm60")
@@ -17,4 +22,7 @@ script = ExtResource("1_e6ncs")
 icon = SubResource("AtlasTexture_nnah2")
 itemTexture = SubResource("AtlasTexture_j2fqd")
 ItemData = ExtResource("1_5n0x1")
+ItemName = SubResource("Resource_njl6l")
 MaxStackSize = 99
+GoldCost = 5
+Category = 2000

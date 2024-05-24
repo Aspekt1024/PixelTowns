@@ -1,6 +1,6 @@
 using Godot;
+using Godot.Collections;
 using PixelTowns;
-using PixelTowns.InventoryManagement;
 using PixelTowns.UI;
 
 public partial class GameManager : Node
@@ -9,11 +9,10 @@ public partial class GameManager : Node
 	[Export] private Player player;
 	[Export] private GameConfiguration configuration;
 	[Export] private GameResources resources;
-	[Export] private UIManager ui;
+	[Export] private PackedScene uiPrefab;
 	[Export] private Camera2D camera;
 	
-	// TODO create starting equipment data system
-	[Export] private InventoryData inventoryData;
+	[Export] private PlayerData startingPlayerData;
 
 	private static GameManager instance;
 
@@ -27,6 +26,8 @@ public partial class GameManager : Node
 	public static UIManager UI => instance.ui;
 	public static Camera2D Camera => instance.camera;
 	public static SaveFile SaveFile => instance.saveFile;
+
+	private UIManager ui;
 	
 	public GameManager()
 	{
@@ -36,9 +37,12 @@ public partial class GameManager : Node
 
 	public override void _Ready()
 	{
+		ui = uiPrefab.Instantiate<UIManager>();
+		AddChild(ui);
+        
 		saveFile = SaveFile.Load() ?? new SaveFile()
 		{
-			InventoryData = inventoryData,
+			PlayerData = startingPlayerData,
 		};
 		saveFile.ApplyData();
 	}
@@ -101,6 +105,13 @@ public partial class GameManager : Node
 		return instance.resources.chicken.Instantiate<Chicken>();
 	}
 
-	
+	public override Array<Dictionary> _GetPropertyList()
+	{
+		var props = base._GetPropertyList();
+		var l = TranslationServer.GetLocale();
+		var to = TranslationServer.GetTranslationObject(l);
+		GD.Print(to.GetMessageCount());
+		return props;
+	}
 }
 
