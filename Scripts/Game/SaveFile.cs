@@ -1,4 +1,5 @@
 using Godot;
+using PixelTowns.InventoryManagement;
 
 namespace PixelTowns;
 
@@ -17,8 +18,10 @@ public partial class SaveFile : Resource
 			DirAccess.MakeDirAbsolute(SavesDir);
 		}
 
+		string path = $"{SavesDir}/{name}.res";
 		Resource save = Duplicate(true);
-		ResourceSaver.Save(save, $"{SavesDir}/{name}.res");
+		ResourceSaver.Save(save, path);
+		GD.Print($"Game saved to {path}");
 	}
 
 	public static SaveFile Load(string name = DefaultFile)
@@ -31,6 +34,6 @@ public partial class SaveFile : Resource
 
 	public void ApplyData()
 	{
-		GameManager.UI.Inventory.PopulateInventory(PlayerData.InventoryData);
+		GameManager.UI.GetUi<InventoryManager>().PopulateInventory(PlayerData.InventoryData);
 	}
 }

@@ -1,11 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4y4218011xju"]
+[gd_scene load_steps=20 format=3 uid="uid://c4y4218011xju"]
 
 [ext_resource type="Texture2D" uid="uid://da4brpvqyjo27" path="res://Art/Imported/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_fvejh"]
 [ext_resource type="Script" path="res://Scripts/Units/Player.cs" id="1_o57kg"]
 [ext_resource type="Script" path="res://Scripts/Game/GameManager.cs" id="1_tc4xl"]
 [ext_resource type="Resource" uid="uid://qhj58pcdxhts" path="res://Data/GameConfig.tres" id="2_0amof"]
 [ext_resource type="Texture2D" uid="uid://p4ir2xokhngn" path="res://Art/Imported/kenney_monochrome-rpg/Dot Matrix/Tiles/tile_0082.png" id="2_bkfcs"]
-[ext_resource type="Resource" uid="uid://c02acig2dn12c" path="res://Data/GameResources.tres" id="3_hv6cr"]
 [ext_resource type="Texture2D" uid="uid://brtoktavwqow4" path="res://Art/Imported/farmingTilesheetComplete.png" id="4_7i365"]
 [ext_resource type="Script" path="res://Scripts/World/WorldGrid.cs" id="4_fpeki"]
 [ext_resource type="Resource" uid="uid://cxw02htk8jpd2" path="res://Data/Player/PlayerStartingData.tres" id="4_iexxg"]
@@ -1648,7 +1647,6 @@ script = ExtResource("1_tc4xl")
 worldGrid = NodePath("../WorldGrid")
 player = NodePath("../Player")
 configuration = ExtResource("2_0amof")
-resources = ExtResource("3_hv6cr")
 uiPrefab = ExtResource("11_aqhko")
 camera = NodePath("../Player/Camera2D")
 startingPlayerData = ExtResource("4_iexxg")

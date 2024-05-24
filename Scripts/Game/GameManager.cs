@@ -8,7 +8,6 @@ public partial class GameManager : Node
 	[Export] private WorldGrid worldGrid;
 	[Export] private Player player;
 	[Export] private GameConfiguration configuration;
-	[Export] private GameResources resources;
 	[Export] private PackedScene uiPrefab;
 	[Export] private Camera2D camera;
 	
@@ -17,17 +16,20 @@ public partial class GameManager : Node
 	private static GameManager instance;
 
 	private readonly GameTime time;
-	private SaveFile saveFile;
+	private SaveFile gameData;
+	private UIManager ui;
+	
+	private readonly GameState gameState = new();
+	private readonly InputManager input = new();
 	
 	public static WorldGrid WorldGrid => instance.worldGrid;
 	public static Player Player => instance.player;
 	public static GameConfiguration Config => instance.configuration;
-	public static GameResources Resources => instance.resources;
 	public static UIManager UI => instance.ui;
 	public static Camera2D Camera => instance.camera;
-	public static SaveFile SaveFile => instance.saveFile;
-
-	private UIManager ui;
+	public static SaveFile GameData => instance.gameData;
+	public static InputManager Input => instance.input;
+	public static GameState State => instance.gameState;
 	
 	public GameManager()
 	{
@@ -40,69 +42,29 @@ public partial class GameManager : Node
 		ui = uiPrefab.Instantiate<UIManager>();
 		AddChild(ui);
         
-		saveFile = SaveFile.Load() ?? new SaveFile()
+		gameData = SaveFile.Load() ?? new SaveFile()
 		{
 			PlayerData = startingPlayerData,
 		};
-		saveFile.ApplyData();
+		gameData.ApplyData();
+
+		gameState.StartGame();
 	}
 
 	public override void _Process(double delta)
 	{
 		time.Tick(delta);
+		input.Tick();
 	}
 
-	public override void _Input(InputEvent @event)
+	public override void _PhysicsProcess(double delta)
 	{
-		if (@event is InputEventKey keyInput)
-		{
-			if (keyInput.Pressed)
-			{
-				switch (keyInput.Keycode)
-				{
-					case Key.Key1:
-						UI.Inventory.SelectToolbeltSlot(0);
-						break;
-					case Key.Key2:
-						UI.Inventory.SelectToolbeltSlot(1);
-						break;
-					case Key.Key3:
-						UI.Inventory.SelectToolbeltSlot(2);
-						break;
-					case Key.Key4:
-						UI.Inventory.SelectToolbeltSlot(3);
-						break;
-					case Key.Key5:
-						UI.Inventory.SelectToolbeltSlot(4);
-						break;
-					case Key.Key6:
-						UI.Inventory.SelectToolbeltSlot(5);
-						break;
-					case Key.Key7:
-						UI.Inventory.SelectToolbeltSlot(6);
-						break;
-					case Key.Key8:
-						UI.Inventory.SelectToolbeltSlot(7);
-						break;
-					case Key.Key9:
-						UI.Inventory.SelectToolbeltSlot(8);
-						break;
-					case Key.Key0:
-						UI.Inventory.SelectToolbeltSlot(9);
-						break;
-				}
-			}
-		}
+		input.PhysicsTick();
 	}
 
 	public static void IncrementDay(int numDays = 1)
 	{
 		WorldGrid.IncrementDay(numDays);
-	}
-	
-	public static Chicken CreateChicken()
-	{
-		return instance.resources.chicken.Instantiate<Chicken>();
 	}
 
 	public override Array<Dictionary> _GetPropertyList()
@@ -112,6 +74,11 @@ public partial class GameManager : Node
 		var to = TranslationServer.GetTranslationObject(l);
 		GD.Print(to.GetMessageCount());
 		return props;
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		Input.OnInputEvent(@event);
 	}
 }
 

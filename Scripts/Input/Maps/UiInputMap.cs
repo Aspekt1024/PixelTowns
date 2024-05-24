@@ -1,8 +1,17 @@
-﻿namespace PixelTowns;
+﻿using System.Collections.Generic;
 
-public class UiInputMap
+namespace PixelTowns;
+
+public class UiInputMap : GameInputMap
 {
-    public const string Inventory = "inventory";
-    public const string Exit = "exit";
-    public const string Shop = "shop";
+
+
+    private static readonly List<string> UiMap = new()
+    {
+
+    };
+        
+    protected override List<string> Actions => UiMap;
+
+
 }

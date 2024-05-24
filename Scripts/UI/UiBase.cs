@@ -1,6 +1,16 @@
-﻿namespace PixelTowns.UI;
+﻿using Godot;
 
-public class GameUi
+namespace PixelTowns.UI;
+
+public partial class UiBase : Control
 {
-    
+    public virtual void Open()
+    {
+        Show();
+    }
+
+    public virtual void Close()
+    {
+        Hide();
+    }
 }

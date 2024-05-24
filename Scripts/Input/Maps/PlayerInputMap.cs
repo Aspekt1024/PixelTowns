@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using Godot;
+using PixelTowns.InventoryManagement;
 
 namespace PixelTowns;
 
-public class PlayerActionsInputMap : GameInputMap
+public class PlayerInputMap : GameInputMap
 {
     private const string MoveLeft = "moveLeft";
     private const string MoveRight = "moveRight";
@@ -34,7 +35,8 @@ public class PlayerActionsInputMap : GameInputMap
 
     protected override void OnTick()
     {
-        
+        if (Input.IsActionJustPressed(Interact)) observers.ForEach(o => o.OnInteractPressed());
+        if (Input.IsActionJustPressed(Use)) observers.ForEach(o => o.OnUsePressed());
     }
 
     public Vector2 GetMovementAxis()
@@ -47,5 +49,48 @@ public class PlayerActionsInputMap : GameInputMap
             Y = Input.GetActionStrength(MoveDown) - Input.GetActionStrength(MoveUp)
         };
         return inputAxis.Normalized();
+    }
+
+    protected override void OnInputEvent(InputEvent @event)
+	{
+		if (@event is InputEventKey keyInput)
+		{
+			if (keyInput.Pressed)
+			{
+				switch (keyInput.Keycode)
+				{
+					case Key.Key1:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(0);
+						break;
+					case Key.Key2:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(1);
+						break;
+					case Key.Key3:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(2);
+						break;
+					case Key.Key4:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(3);
+						break;
+					case Key.Key5:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(4);
+						break;
+					case Key.Key6:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(5);
+						break;
+					case Key.Key7:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(6);
+						break;
+					case Key.Key8:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(7);
+						break;
+					case Key.Key9:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(8);
+						break;
+					case Key.Key0:
+						GameManager.UI.GetUi<InventoryManager>().SelectToolbeltSlot(9);
+						break;
+				}
+			}
+		}
     }
 }

@@ -12,7 +12,8 @@ public partial class InteractionPoint : Area2D
     {
         if (other is Player p)
         {
-            GameManager.UI.Shop.OpenShop(shopData);
+            GameManager.UI.GetUi<ShopUI>().SetData(shopData);
+            GameManager.UI.OpenUi<ShopUI>();
         }
     }
 }

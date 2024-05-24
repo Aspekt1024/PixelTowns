@@ -2,10 +2,11 @@
 using Godot;
 using PixelTowns.InventoryManagement;
 using PixelTowns.Items;
+using PixelTowns.UI;
 
 namespace PixelTowns.ShopManagement;
 
-public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObserver, CurrencyData.IObserver
+public partial class ShopUI : UiBase, ItemContainer.IObserver, ShopItemUI.IObserver, CurrencyData.IObserver
 {
     [Export] private TextureRect portrait;
     [Export] private Label moneyLabel;
@@ -36,9 +37,9 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         }
     }
 
-    public void OpenShop(ShopData data)
+    public void SetData(ShopData data)
     {
-        playerData = GameManager.SaveFile.PlayerData;
+        playerData = GameManager.GameData.PlayerData;
         if (data == null)
         {
             data = testShopData;
@@ -64,24 +65,24 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         shopItemContainer.SizeFlagsHorizontal = SizeFlags.ExpandFill;
         
         playerInventory.SetData(playerData.InventoryData);
+        playerInventory.UnregisterObserver(this);
         playerInventory.RegisterObserver(this);
 
+        playerData.CurrencyData.UnregisterObserver(this);
         playerData.CurrencyData.RegisterObserver(this);
         OnCurrencyModified(playerData.CurrencyData);
-        
-        Show();
     }
 
-    public void CloseShop()
+    public override void Close()
     {
         playerData.CurrencyData.UnregisterObserver(this);
         playerInventory.UnregisterObserver(this);
-        Hide();
+        base.Close();
     }
 
     public void OnShopItemClicked(ShopItemUI shopItem, bool isAlternate)
     {
-        CurrencyData currencyData = GameManager.SaveFile.PlayerData.CurrencyData;
+        CurrencyData currencyData = GameManager.GameData.PlayerData.CurrencyData;
         int quantity = isAlternate ? 5 : 1;
         if (currencyData.TryPurchase(shopItem.ShopItemData.ItemData, quantity))
         {
@@ -114,7 +115,7 @@ public partial class ShopUI : Control, ItemContainer.IObserver, ShopItemUI.IObse
         {
             SlotData slotData = itemContainer.TakeFromSlot(slot);
             int gold = slotData.ItemData.GoldCost * slotData.Quantity;
-            GameManager.SaveFile.PlayerData.CurrencyData.AddGold(gold);
+            GameManager.GameData.PlayerData.CurrencyData.AddGold(gold);
         }
         else
         {

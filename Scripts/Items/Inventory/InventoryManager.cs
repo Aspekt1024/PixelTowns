@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Godot;
 using PixelTowns.Items;
+using PixelTowns.UI;
 
 namespace PixelTowns.InventoryManagement;
 
 [GlobalClass]
-public partial class InventoryManager : Node, ItemContainer.IObserver
+public partial class InventoryManager : UiBase, ItemContainer.IObserver
 {
     [Export] private ItemContainer toolbelt;
     [Export] private Inventory inventory;
@@ -122,13 +123,14 @@ public partial class InventoryManager : Node, ItemContainer.IObserver
 
     public ItemData GetSelectedToolbeltItemData() => toolbelt.GetSelectedItemData();
     public void UseSelectedToolbeltItem() => toolbelt.UseSelectedSlot();
-    public void ToggleInventory()
+
+    public override void Open()
     {
-        inventory.ToggleVisibility();
-        toolbelt.ToggleVisibility();
+        inventory.Show();
+        toolbelt.Hide();
     }
 
-    public void HideInventory()
+    public override void Close()
     {
         inventory.Hide();
         toolbelt.Show();
