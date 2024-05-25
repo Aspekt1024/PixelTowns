@@ -8,6 +8,7 @@ using PixelTowns.World;
 public partial class WorldGrid : TileMap
 {
 	[Export] private Node2D cursor;
+	[Export] private SpawnPoint chickenSpawnPoint;
 	
 	public enum TerrainLayer
 	{
@@ -134,5 +135,10 @@ public partial class WorldGrid : TileMap
 		{
 			GD.Print("Not ready yet!");
 		}
+	}
+
+	public void SetData(WorldData data)
+	{
+		chickenSpawnPoint.SpawnChickens(data.numChickens);
 	}
 }

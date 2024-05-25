@@ -37,5 +37,13 @@ public partial class SaveFile : Resource
 	public void ApplyData()
 	{
 		GameManager.UI.GetUi<InventoryManager>().PopulateInventory(PlayerData.InventoryData);
+		if (WorldData == null)
+		{
+			WorldData = new WorldData()
+			{
+				numChickens = 3,
+			};
+		}
+		GameManager.WorldGrid.SetData(WorldData);
 	}
 }

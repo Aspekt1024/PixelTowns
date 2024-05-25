@@ -21,6 +21,7 @@ public partial class GameManager : Node
 	
 	private readonly GameState gameState = new();
 	private readonly InputManager input = new();
+	private readonly Random random = new(0);
 	
 	public static WorldGrid WorldGrid => instance.worldGrid;
 	public static Player Player => instance.player;
