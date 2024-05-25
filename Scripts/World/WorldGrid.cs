@@ -3,12 +3,13 @@ using Godot;
 using Godot.Collections;
 using PixelTowns.InventoryManagement;
 using PixelTowns.Items;
+using PixelTowns.Units;
 using PixelTowns.World;
 
 public partial class WorldGrid : TileMap
 {
 	[Export] private Node2D cursor;
-	[Export] private SpawnPoint chickenSpawnPoint;
+	[Export] private SpawnPoint animalSpawnPoint;
 	
 	public enum TerrainLayer
 	{
@@ -139,6 +140,14 @@ public partial class WorldGrid : TileMap
 
 	public void SetData(WorldData data)
 	{
-		chickenSpawnPoint.SpawnChickens(data.numChickens);
+		foreach (var animal in data.PurchasedAnimals)
+		{
+			SpawnAnimal(animal);
+		}
+	}
+
+	public void SpawnAnimal(AnimalData animalData)
+	{
+		animalSpawnPoint.Spawn(animalData.Prefab);
 	}
 }

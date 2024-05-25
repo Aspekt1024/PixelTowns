@@ -1,7 +1,8 @@
 using Godot;
-using System;
 
-public partial class Chicken : Sprite2D
+namespace PixelTowns.Units;
+
+public partial class Chicken : Animal
 {
 	[Export] private AnimationPlayer animPlayer;
     [Export] private float timeToSit = 5000f;

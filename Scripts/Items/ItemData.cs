@@ -24,6 +24,8 @@ public abstract partial class ItemData : Resource
     [Export] public int GoldCost;
 
     [Export] public ItemCategory Category;
+
+    public virtual bool CanPlaceInInventory => false;
     
     public abstract Texture2D GetIcon();
 
@@ -33,4 +35,6 @@ public abstract partial class ItemData : Resource
     public string GetName() => ItemName.GetTranslation();
 
     public bool IsStackable() => MaxStackSize > 1;
+
+    public virtual void OnPurchased() { }
 }
