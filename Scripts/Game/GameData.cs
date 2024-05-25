@@ -4,8 +4,11 @@ using PixelTowns.World;
 
 namespace PixelTowns;
 
+/// <summary>
+/// Contains all the data required to load/save games
+/// </summary>
 [GlobalClass]
-public partial class SaveFile : Resource
+public partial class GameData : Resource
 {
 	private const string SavesDir = "user://saves";
 	private const string DefaultFile = "testSave";
@@ -26,24 +29,17 @@ public partial class SaveFile : Resource
 		GD.Print($"Game saved to {path}");
 	}
 
-	public static SaveFile Load(string name = DefaultFile)
+	public static GameData Load(string name = DefaultFile)
 	{
 		string file = $"{SavesDir}/{name}.res";
 		if (!ResourceLoader.Exists(file)) return null;
 		
-		return ResourceLoader.Load<SaveFile>(file);
+		return ResourceLoader.Load<GameData>(file);
 	}
 
 	public void ApplyData()
 	{
 		GameManager.UI.GetUi<InventoryManager>().PopulateInventory(PlayerData.InventoryData);
-		if (WorldData == null)
-		{
-			WorldData = new WorldData()
-			{
-				numChickens = 3,
-			};
-		}
 		GameManager.WorldGrid.SetData(WorldData);
 	}
 }

@@ -11,12 +11,12 @@ public partial class GameManager : Node
 	[Export] private PackedScene uiPrefab;
 	[Export] private Camera2D camera;
 	
-	[Export] private PlayerData startingPlayerData;
+	[Export] private GameData startingGameData;
 
 	private static GameManager instance;
 
 	private readonly GameTime time;
-	private SaveFile gameData;
+	private GameData gameData;
 	private UIManager ui;
 	
 	private readonly GameState gameState = new();
@@ -28,7 +28,7 @@ public partial class GameManager : Node
 	public static GameConfiguration Config => instance.configuration;
 	public static UIManager UI => instance.ui;
 	public static Camera2D Camera => instance.camera;
-	public static SaveFile GameData => instance.gameData;
+	public static GameData GameData => instance.gameData;
 	public static InputManager Input => instance.input;
 	public static GameState State => instance.gameState;
 	
@@ -42,11 +42,8 @@ public partial class GameManager : Node
 	{
 		ui = uiPrefab.Instantiate<UIManager>();
 		AddChild(ui);
-        
-		gameData = SaveFile.Load() ?? new SaveFile()
-		{
-			PlayerData = startingPlayerData,
-		};
+
+		gameData = GameData.Load() ?? startingGameData;
 		gameData.ApplyData();
 
 		gameState.StartGame();

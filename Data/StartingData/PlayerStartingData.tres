@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="PlayerData" load_steps=4 format=3 uid="uid://cxw02htk8jpd2"]
+
+[ext_resource type="Resource" uid="uid://p6spx2ja8wi3" path="res://Data/Player/CurrencyData.tres" id="1_hiir0"]
+[ext_resource type="Resource" uid="uid://22p7rspccpqh" path="res://Data/Player/InventoryData.tres" id="2_l1i4y"]
+[ext_resource type="Script" path="res://Scripts/Units/PlayerData.cs" id="3_gj1p2"]
+
+[resource]
+script = ExtResource("3_gj1p2")
+InventoryData = ExtResource("2_l1i4y")
+CurrencyData = ExtResource("1_hiir0")
