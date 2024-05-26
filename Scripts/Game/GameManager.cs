@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using PixelTowns;
 using PixelTowns.UI;
+using PixelTowns.Units;
 
 public partial class GameManager : Node
 {
@@ -22,6 +23,7 @@ public partial class GameManager : Node
 	private readonly GameState gameState = new();
 	private readonly InputManager input = new();
 	private readonly Random random = new(0);
+	private readonly AiOverseer aiOverseer = new();
 	
 	public static WorldGrid WorldGrid => instance.worldGrid;
 	public static Player Player => instance.player;
@@ -31,11 +33,16 @@ public partial class GameManager : Node
 	public static GameData GameData => instance.gameData;
 	public static InputManager Input => instance.input;
 	public static GameState State => instance.gameState;
+
+	public static Random Random => instance.random;
+	public static AiOverseer Ai => instance.aiOverseer;
 	
 	public GameManager()
 	{
 		instance = this;
 		time = new GameTime();
+		
+		Ai.SetLogMode(AiOverseer.LogMode.Normal);
 	}
 
 	public override void _Ready()
