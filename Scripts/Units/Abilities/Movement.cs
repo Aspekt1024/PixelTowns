@@ -9,8 +9,10 @@ public class Movement
     private readonly MovementSettings settings;
 
     private Vector2 destination;
+    private bool isFacingRight;
 
     public event Action DestinationReached = delegate { };
+    public event Action<bool> DirectionChanged = delegate { };
 
     public bool IsMoving { get; private set; }
 
@@ -38,9 +40,15 @@ public class Movement
     private void ActionMovement(float deltaTime)
     {
         Vector2 dist = destination - body.Position;
-        Vector2 direction = dist.Normalized();
-
         Vector2 moveVector = dist.Normalized() * settings.moveSpeed * deltaTime;
+        
+        bool isMovingRight = moveVector.X > 0;
+        if (isMovingRight != isFacingRight)
+        {
+            isFacingRight = isMovingRight;
+            DirectionChanged?.Invoke(isFacingRight);
+        }
+        
         if (moveVector.Length() >= dist.Length())
         {
             body.MoveAndCollide(dist);

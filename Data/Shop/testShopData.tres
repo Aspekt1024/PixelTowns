@@ -8,4 +8,4 @@
 script = ExtResource("1_bm5yu")
 Portrait = ExtResource("1_mum04")
 Greeting = "Hi there, hello! This is my shop!"
-ShopItems = Array[Resource]([ExtResource("2_m4otj"), null])
+ShopItems = Array[Resource]([ExtResource("2_m4otj")])
