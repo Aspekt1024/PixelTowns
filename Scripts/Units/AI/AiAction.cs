@@ -14,9 +14,16 @@ public abstract class AiAction
     public void RegisterObserver(IObserver o) => observers.Add(o);
     public void UnregisterObserver(IObserver o) => observers.Remove(o);
 
+    public Unit Unit { get; private set; }
+
+    public AiAction(Unit unit)
+    {
+        Unit = unit;
+    }
+
     public void Run()
     {
-        AiOverseer.Log($"{GetType().Name} started");
+        AiOverseer.Log($"{Unit.Name} - {GetType().Name} started");
         Begin();
     }
     
@@ -27,7 +34,7 @@ public abstract class AiAction
 
     protected void CompleteAction()
     {
-        AiOverseer.Log($"{GetType().Name} complete");
+        AiOverseer.Log($"{Unit.Name} - {GetType().Name} complete");
         observers.ForEachReverse(o => o.OnActionComplete(this));
     }
 }

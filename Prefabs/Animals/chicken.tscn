@@ -1,7 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://nfipqlsne4xv"]
+[gd_scene load_steps=10 format=3 uid="uid://7o527shyjt4m"]
 
 [ext_resource type="Texture2D" uid="uid://bry8lxocolpoa" path="res://Art/Imported/FreeChickens/Chicken_Sprite_Sheet.png" id="1_yf6ty"]
 [ext_resource type="Script" path="res://Scripts/Units/Chicken.cs" id="2_ekqdw"]
+[ext_resource type="Script" path="res://Scripts/Units/Abilities/MovementSettings.cs" id="3_2e2ys"]
+
+[sub_resource type="Resource" id="Resource_romfr"]
+script = ExtResource("3_2e2ys")
+moveSpeed = 20.0
 
 [sub_resource type="Animation" id="Animation_xw7xe"]
 resource_name = "Idle"
@@ -58,16 +63,25 @@ _data = {
 "Sit": SubResource("Animation_p03ss")
 }
 
-[node name="Chicken" type="Sprite2D" node_paths=PackedStringArray("animPlayer")]
-position = Vector2(94, 91)
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2r0n"]
+
+[node name="chicken" type="CharacterBody2D" node_paths=PackedStringArray("animPlayer")]
+position = Vector2(11, 10)
+script = ExtResource("2_ekqdw")
+animPlayer = NodePath("Sprite/AnimationPlayer")
+movementSettings = SubResource("Resource_romfr")
+
+[node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("1_yf6ty")
 hframes = 4
 vframes = 4
-script = ExtResource("2_ekqdw")
-animPlayer = NodePath("AnimationPlayer")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite"]
 libraries = {
 "": SubResource("AnimationLibrary_7dq2h")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_g2r0n")

@@ -2,7 +2,7 @@
 
 namespace PixelTowns.Units;
 
-public partial class Animal : Node2D
+public abstract partial class Animal : Unit
 {
     [Export] public AnimalData AnimalData;
 }
