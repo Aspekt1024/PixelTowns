@@ -5,6 +5,8 @@ namespace PixelTowns.Units;
 
 public class WanderAction : AiAction
 {
+    private float timeLastWandered;
+    
     public WanderAction(Unit unit) : base(unit)
     {
     }
@@ -16,17 +18,20 @@ public class WanderAction : AiAction
         Unit.Movement.DestinationReached += OnDestinationReached;
     }
 
-    public override void Tick(double deltaTime)
+    public override void Tick(float deltaTime)
     {
+        
     }
 
     public override float GetUtility()
     {
-        return 1f;
+        const float wanderInterval = 3000f;
+        return (Time.GetTicksMsec() - timeLastWandered) / wanderInterval;
     }
 
     private void OnDestinationReached()
     {
+        timeLastWandered = Time.GetTicksMsec();
         UnregisterEvents();
         CompleteAction();
     }

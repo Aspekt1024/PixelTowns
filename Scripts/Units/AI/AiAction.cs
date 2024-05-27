@@ -23,18 +23,18 @@ public abstract class AiAction
 
     public void Run()
     {
-        AiOverseer.Log($"{Unit.Name} - {GetType().Name} started");
+        AiOverseer.LogInfo($"{Unit.Name} - {GetType().Name} started");
         Begin();
     }
     
-    public abstract void Tick(double deltaTime);
+    public abstract void Tick(float deltaTime);
     public abstract float GetUtility();
     
     protected abstract void Begin();
 
     protected void CompleteAction()
     {
-        AiOverseer.Log($"{Unit.Name} - {GetType().Name} complete");
+        AiOverseer.LogInfo($"{Unit.Name} - {GetType().Name} complete");
         observers.ForEachReverse(o => o.OnActionComplete(this));
     }
 }

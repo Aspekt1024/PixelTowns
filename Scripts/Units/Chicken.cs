@@ -1,4 +1,5 @@
 using Godot;
+using PixelTowns.Scripts.Units.AI;
 
 namespace PixelTowns.Units;
 
@@ -14,6 +15,8 @@ public partial class Chicken : Animal
 		
 		// TODO AI modules
 		Ai.AddAction(new WanderAction(this));
+		Ai.AddAction(new RestAction(this));
+		
 		Ai.SetUtilityRandomisationFactor(0.1f);
 	}
 

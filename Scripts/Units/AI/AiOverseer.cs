@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using Godot;
+﻿using Godot;
 
 namespace PixelTowns.Units;
 
@@ -24,6 +23,15 @@ public class AiOverseer
     {
         LogMode mode = GameManager.Ai.logMode;
         if (mode is LogMode.Normal or LogMode.Verbose)
+        {
+            GD.Print(CreateMessage(message));
+        }
+    }
+
+    public static void LogInfo(string message)
+    {
+        LogMode mode = GameManager.Ai.logMode;
+        if (mode is LogMode.Verbose)
         {
             GD.Print(CreateMessage(message));
         }
