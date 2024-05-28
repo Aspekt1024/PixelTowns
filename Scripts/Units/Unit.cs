@@ -5,17 +5,20 @@ namespace PixelTowns.Units;
 
 public abstract partial class Unit : CharacterBody2D
 {
-    [Export] private Sprite2D spriteNode;
-    [Export] private bool initiallyFacingRight;
+    [Export] private UnitAnimator unitAnimator;
     [Export] private MovementSettings movementSettings;
     
     public readonly AiEngine Ai = new ();
     public Movement Movement { get; private set; }
 
+    protected virtual string IdleAnim => "Idle";
+    protected virtual string WalkAnim => "Walk";
+
     public override void _Ready()
     {
         Movement = new Movement(this, movementSettings);
-        Movement.DirectionChanged += OnDirectionChanged;
+        unitAnimator.Setup(Movement);
+        
         Init();
     }
 
@@ -25,10 +28,5 @@ public abstract partial class Unit : CharacterBody2D
     {
         Ai.Tick((float)delta);
         Movement.Tick((float)delta);
-    }
-
-    private void OnDirectionChanged(bool isFacingRight)
-    {
-        spriteNode.FlipH = !initiallyFacingRight && isFacingRight;
     }
 }

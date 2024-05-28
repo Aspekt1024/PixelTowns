@@ -12,9 +12,20 @@ public class Movement
     private bool isFacingRight;
 
     public event Action DestinationReached = delegate { };
+    public event Action<bool> MoveStateChanged = delegate { };
     public event Action<bool> DirectionChanged = delegate { };
 
-    public bool IsMoving { get; private set; }
+    private bool _isMoving;
+
+    public bool IsMoving
+    {
+        get => _isMoving;
+        private set
+        {
+            _isMoving = value;
+            MoveStateChanged?.Invoke(value);
+        }
+    }
 
     public Movement(CharacterBody2D body, MovementSettings settings)
     {

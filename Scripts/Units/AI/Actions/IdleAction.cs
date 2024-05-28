@@ -3,12 +3,12 @@ using PixelTowns.Units;
 
 namespace PixelTowns.Scripts.Units.AI;
 
-public class RestAction : AiAction
+public class IdleAction : AiAction
 {
     private float startTime;
     private const float IdleDuration = 2000f;
     
-    public RestAction(Unit unit) : base(unit)
+    public IdleAction(Unit unit) : base(unit)
     {
     }
 
