@@ -22,7 +22,7 @@ public class IdleAction : AiAction
 
     public override float GetUtility()
     {
-        return 0.8f;
+        return 0.4f;
     }
 
     protected override void Begin()

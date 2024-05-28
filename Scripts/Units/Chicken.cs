@@ -5,29 +5,28 @@ namespace PixelTowns.Units;
 
 public partial class Chicken : Animal
 {
-    [Export] private float timeToSit = 5000f;
+	[Export] private StringName restAnimation;
 	
 	protected override void Init()
 	{
-		//timeWillSit = Time.GetTicksMsec() + timeToSit;
-		
 		// TODO AI modules
 		Ai.AddAction(new WanderAction(this));
 		Ai.AddAction(new IdleAction(this));
-		//Ai.AddAction(new RestAction(this));
+		
+		Ai.AddAction(new RestAction(this, OnRest));
 		
 		Ai.SetUtilityRandomisationFactor(0.1f);
 	}
 
-	public override void _Process(double delta)
+	private void OnRest(bool isResting)
 	{
-		base._Process(delta);
-		
-		//if (!isSitting && Time.GetTicksMsec() > timeWillSit)
+		if (isResting)
 		{
-			//animPlayer.Play("Sit");
-			//animPlayer.GetAnimation("Sit").LoopMode = Animation.LoopModeEnum.None;
-			//isSitting = true;
+			Animator.AddOverride(restAnimation);	
+		}
+		else
+		{
+			Animator.RemoveOverride(restAnimation);	
 		}
 	}
 }

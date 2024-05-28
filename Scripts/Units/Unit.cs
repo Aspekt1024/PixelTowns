@@ -5,19 +5,18 @@ namespace PixelTowns.Units;
 
 public abstract partial class Unit : CharacterBody2D
 {
-    [Export] private UnitAnimator unitAnimator;
+    [Export] public UnitStats Stats;
+    [Export] protected UnitAnimator Animator;
     [Export] private MovementSettings movementSettings;
     
     public readonly AiEngine Ai = new ();
     public Movement Movement { get; private set; }
 
-    protected virtual string IdleAnim => "Idle";
-    protected virtual string WalkAnim => "Walk";
-
     public override void _Ready()
     {
         Movement = new Movement(this, movementSettings);
-        unitAnimator.Setup(Movement);
+        Animator.Setup(Movement);
+        Stats = (UnitStats)Stats.Duplicate(true);
         
         Init();
     }
@@ -26,7 +25,10 @@ public abstract partial class Unit : CharacterBody2D
 
     public override void _Process(double delta)
     {
-        Ai.Tick((float)delta);
-        Movement.Tick((float)delta);
+        float deltaTime = (float)delta;
+        
+        Stats.Tick(deltaTime);
+        Ai.Tick(deltaTime);
+        Movement.Tick(deltaTime);
     }
 }
