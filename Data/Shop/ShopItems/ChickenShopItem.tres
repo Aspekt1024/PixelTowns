@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="AnimalShopItemData" load_steps=3 format=3 uid="uid://cvio823jbby5d"]
+
+[ext_resource type="Script" path="res://Scripts/Items/Shop/ShopItemData/AnimalShopItemData.cs" id="1_bmio6"]
+[ext_resource type="Resource" uid="uid://dgwy68hdojm16" path="res://Data/AnimalData/ChickenData.tres" id="1_xoerm"]
+
+[resource]
+script = ExtResource("1_bmio6")
+AnimalData = ExtResource("1_xoerm")
+Quantity = 2

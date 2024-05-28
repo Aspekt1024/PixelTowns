@@ -84,17 +84,27 @@ public partial class ShopUI : UiBase, ItemContainer.IObserver, ShopItemUI.IObser
     {
         CurrencyData currencyData = GameManager.GameData.PlayerData.CurrencyData;
         int quantity = isAlternate ? 5 : 1;
-        if (currencyData.TryPurchase(shopItem.ShopItemData.ItemData, quantity))
+        // TODO if we're holding an item already, make sure it's the same type
+        if (currencyData.TryPurchase(shopItem.ShopItemData.GoldCost, quantity))
         {
-            transactionSlot.Show();
-            if (transactionSlot.IsEmpty())
+            shopItem.ShopItemData.OnPurchased();
+            if (shopItem.ShopItemData.Data is ItemData itemData)
             {
-                transactionSlot.SetSlotData(new SlotData(shopItem.ShopItemData.ItemData, quantity, 0));   
+                AddItemDataToTransactionSlot(itemData, quantity);
             }
-            else if (transactionSlot.ItemData == shopItem.ShopItemData.ItemData)
-            {
-                transactionSlot.SlotData.AddQuantity(quantity);
-            }
+        }
+    }
+
+    private void AddItemDataToTransactionSlot(ItemData itemData, int quantity)
+    {
+        transactionSlot.Show();
+        if (transactionSlot.IsEmpty())
+        {
+            transactionSlot.SetSlotData(new SlotData(itemData, quantity, 0));   
+        }
+        else if (transactionSlot.ItemData == itemData)
+        {
+            transactionSlot.SlotData.AddQuantity(quantity);
         }
     }
     

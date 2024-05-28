@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using PixelTowns;
 using PixelTowns.UI;
+using PixelTowns.Units;
 
 public partial class GameManager : Node
 {
@@ -11,41 +12,45 @@ public partial class GameManager : Node
 	[Export] private PackedScene uiPrefab;
 	[Export] private Camera2D camera;
 	
-	[Export] private PlayerData startingPlayerData;
+	[Export] private GameData startingGameData;
 
 	private static GameManager instance;
 
 	private readonly GameTime time;
-	private SaveFile gameData;
+	private GameData gameData;
 	private UIManager ui;
 	
 	private readonly GameState gameState = new();
 	private readonly InputManager input = new();
+	private readonly Random random = new(0);
+	private readonly AiOverseer aiOverseer = new();
 	
 	public static WorldGrid WorldGrid => instance.worldGrid;
 	public static Player Player => instance.player;
 	public static GameConfiguration Config => instance.configuration;
 	public static UIManager UI => instance.ui;
 	public static Camera2D Camera => instance.camera;
-	public static SaveFile GameData => instance.gameData;
+	public static GameData GameData => instance.gameData;
 	public static InputManager Input => instance.input;
 	public static GameState State => instance.gameState;
+
+	public static Random Random => instance.random;
+	public static AiOverseer Ai => instance.aiOverseer;
 	
 	public GameManager()
 	{
 		instance = this;
 		time = new GameTime();
+		
+		Ai.SetLogMode(AiOverseer.LogMode.Normal);
 	}
 
 	public override void _Ready()
 	{
 		ui = uiPrefab.Instantiate<UIManager>();
 		AddChild(ui);
-        
-		gameData = SaveFile.Load() ?? new SaveFile()
-		{
-			PlayerData = startingPlayerData,
-		};
+
+		gameData = GameData.Load() ?? startingGameData;
 		gameData.ApplyData();
 
 		gameState.StartGame();

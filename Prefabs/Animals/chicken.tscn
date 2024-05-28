@@ -1,0 +1,140 @@
+[gd_scene load_steps=17 format=3 uid="uid://7o527shyjt4m"]
+
+[ext_resource type="Texture2D" uid="uid://bry8lxocolpoa" path="res://Art/Imported/FreeChickens/Chicken_Sprite_Sheet.png" id="1_yf6ty"]
+[ext_resource type="Script" path="res://Scripts/Units/Stats/ResourceStat.cs" id="2_1u1xs"]
+[ext_resource type="Script" path="res://Scripts/Units/Chicken.cs" id="2_ekqdw"]
+[ext_resource type="Script" path="res://Scripts/Units/Abilities/MovementSettings.cs" id="3_2e2ys"]
+[ext_resource type="Script" path="res://Scripts/Units/Stats/UnitStats.cs" id="3_yk0kw"]
+[ext_resource type="Script" path="res://Scripts/Units/Animation/UnitAnimator.cs" id="4_4slad"]
+
+[sub_resource type="Resource" id="Resource_cuof7"]
+script = ExtResource("2_1u1xs")
+current = 100.0
+max = 100.0
+
+[sub_resource type="Resource" id="Resource_4jqn0"]
+script = ExtResource("3_yk0kw")
+Energy = SubResource("Resource_cuof7")
+
+[sub_resource type="Resource" id="Resource_romfr"]
+script = ExtResource("3_2e2ys")
+moveSpeed = 20.0
+
+[sub_resource type="Animation" id="Animation_460kf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_l4v4g"]
+resource_name = "Walk"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_8hpie"]
+resource_name = "IdlePeck"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [5, 6, 7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_xw7xe"]
+resource_name = "IdleScratch"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 13, 12]
+}
+
+[sub_resource type="Animation" id="Animation_p03ss"]
+resource_name = "Rest"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [4, 5, 10, 11]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7dq2h"]
+_data = {
+"IdlePeck": SubResource("Animation_8hpie"),
+"IdleScratch": SubResource("Animation_xw7xe"),
+"RESET": SubResource("Animation_460kf"),
+"Rest": SubResource("Animation_p03ss"),
+"Walk": SubResource("Animation_l4v4g")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g2r0n"]
+
+[node name="chicken" type="CharacterBody2D" node_paths=PackedStringArray("Animator")]
+position = Vector2(11, 10)
+script = ExtResource("2_ekqdw")
+restAnimation = &"Rest"
+Stats = SubResource("Resource_4jqn0")
+Animator = NodePath("Sprite/AnimationPlayer")
+movementSettings = SubResource("Resource_romfr")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_yf6ty")
+hframes = 4
+vframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite" node_paths=PackedStringArray("spriteNode")]
+libraries = {
+"": SubResource("AnimationLibrary_7dq2h")
+}
+script = ExtResource("4_4slad")
+spriteNode = NodePath("..")
+IdleAnims = {
+"IdlePeck": "0.3",
+"IdleScratch": "0.7"
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.5, 0.5)
+shape = SubResource("CircleShape2D_g2r0n")

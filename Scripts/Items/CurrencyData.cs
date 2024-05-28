@@ -29,9 +29,9 @@ public partial class CurrencyData : Resource
         }
     }
     
-    public bool TryPurchase(ItemData itemData, int quantity)
+    public bool TryPurchase(int cost, int quantity)
     {
-        int goldCost = itemData.GoldCost * quantity;
+        int goldCost = cost * quantity;
         if (Gold >= goldCost)
         {
             Gold -= goldCost;

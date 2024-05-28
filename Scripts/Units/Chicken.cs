@@ -1,29 +1,32 @@
 using Godot;
-using System;
+using PixelTowns.Scripts.Units.AI;
 
-public partial class Chicken : Sprite2D
+namespace PixelTowns.Units;
+
+public partial class Chicken : Animal
 {
-	[Export] private AnimationPlayer animPlayer;
-    [Export] private float timeToSit = 5000f;
-
-    private float timeWillSit;
-    private bool isSitting;
+	[Export] private StringName restAnimation;
 	
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	protected override void Init()
 	{
-		timeWillSit = Time.GetTicksMsec() + timeToSit;
-		animPlayer.Play("Idle");
+		// TODO AI modules
+		Ai.AddAction(new WanderAction(this));
+		Ai.AddAction(new IdleAction(this));
+		
+		Ai.AddAction(new RestAction(this, OnRest));
+		
+		Ai.SetUtilityRandomisationFactor(2f);
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	private void OnRest(bool isResting)
 	{
-		if (!isSitting && Time.GetTicksMsec() > timeWillSit)
+		if (isResting)
 		{
-			animPlayer.Play("Sit");
-			animPlayer.GetAnimation("Sit").LoopMode = Animation.LoopModeEnum.None;
-			isSitting = true;
+			Animator.AddOverride(restAnimation);	
+		}
+		else
+		{
+			Animator.RemoveOverride(restAnimation);	
 		}
 	}
 }

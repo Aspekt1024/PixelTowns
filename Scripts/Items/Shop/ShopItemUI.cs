@@ -24,9 +24,9 @@ public partial class ShopItemUI : Control
     internal void Populate(ShopItemData shopItemData)
     {
         ShopItemData = shopItemData;
-        icon.Texture = shopItemData.ItemData.GetIcon();
-        nameLabel.Text = shopItemData.ItemData.ItemName.GetTranslation();
-        costLabel.Text = $"{shopItemData.ItemData.GoldCost} G";
+        icon.Texture = shopItemData.Icon;
+        nameLabel.Text = shopItemData.ItemName;
+        costLabel.Text = $"{shopItemData.GoldCost} G";
 
         SizeFlagsHorizontal = SizeFlags.ExpandFill;
     }
