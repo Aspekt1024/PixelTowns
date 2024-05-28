@@ -15,7 +15,7 @@ public partial class Chicken : Animal
 		
 		Ai.AddAction(new RestAction(this, OnRest));
 		
-		Ai.SetUtilityRandomisationFactor(0.1f);
+		Ai.SetUtilityRandomisationFactor(2f);
 	}
 
 	private void OnRest(bool isResting)

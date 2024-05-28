@@ -29,7 +29,7 @@ public class WanderAction : AiAction
 
     public override float GetUtility()
     {
-        const float wanderInterval = 3000f;
+        const float wanderInterval = 1000f;
         return ((Time.GetTicksMsec() - timeLastWandered) / wanderInterval) * Unit.Stats.Energy.Ratio;
     }
 

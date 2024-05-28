@@ -7,7 +7,7 @@ namespace PixelTowns.Scripts.Units.AI;
 public class RestAction : AiAction
 {
     private float startTime;
-    private const float RestDuration = 7000f;
+    private const float RestDuration = 15000f;
 
     private OverTimeEffect overTimeEffect;
     private readonly Action<bool> onRestCallback;
