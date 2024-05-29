@@ -15,6 +15,7 @@ public partial class GameData : Resource
 
 	[Export] public PlayerData PlayerData;
 	[Export] public WorldData WorldData;
+	[Export] public TimeData TimeData;
 	
 	public void SaveGame(string name = DefaultFile)
 	{
@@ -41,5 +42,6 @@ public partial class GameData : Resource
 	{
 		GameManager.UI.GetUi<InventoryManager>().PopulateInventory(PlayerData.InventoryData);
 		GameManager.WorldGrid.SetData(WorldData);
+		GameManager.Time.SetData(TimeData);
 	}
 }

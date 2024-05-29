@@ -13,10 +13,11 @@ public partial class GameManager : Node
 	[Export] private Camera2D camera;
 	
 	[Export] private GameData startingGameData;
+	[Export] private TimeSettings timeSettings;
 
 	private static GameManager instance;
 
-	private readonly GameTime time;
+	private GameTime time;
 	private GameData gameData;
 	private UIManager ui;
 	
@@ -28,6 +29,7 @@ public partial class GameManager : Node
 	public static WorldGrid WorldGrid => instance.worldGrid;
 	public static Player Player => instance.player;
 	public static GameConfiguration Config => instance.configuration;
+	public static GameTime Time => instance.time;
 	public static UIManager UI => instance.ui;
 	public static Camera2D Camera => instance.camera;
 	public static GameData GameData => instance.gameData;
@@ -40,13 +42,13 @@ public partial class GameManager : Node
 	public GameManager()
 	{
 		instance = this;
-		time = new GameTime();
-		
 		Ai.SetLogMode(AiOverseer.LogMode.Normal);
 	}
 
 	public override void _Ready()
 	{
+		time = new GameTime(this, timeSettings);
+		
 		ui = uiPrefab.Instantiate<UIManager>();
 		AddChild(ui);
 
@@ -58,7 +60,7 @@ public partial class GameManager : Node
 
 	public override void _Process(double delta)
 	{
-		time.Tick(delta);
+		time.Tick((float)delta);
 		input.Tick();
 	}
 

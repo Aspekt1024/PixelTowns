@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c4y4218011xju"]
+[gd_scene load_steps=22 format=3 uid="uid://c4y4218011xju"]
 
 [ext_resource type="Texture2D" uid="uid://da4brpvqyjo27" path="res://Art/Imported/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_fvejh"]
 [ext_resource type="Script" path="res://Scripts/Units/Player.cs" id="1_o57kg"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/World/WorldGrid.cs" id="4_fpeki"]
 [ext_resource type="Resource" uid="uid://ca2512l6jk7r3" path="res://Data/StartingData/_StartingGameData.tres" id="4_n4yqy"]
 [ext_resource type="Texture2D" uid="uid://03cpatnf1bvn" path="res://Art/Imported/Tiny garden_free pack/character_walking_front.png" id="5_h4wic"]
+[ext_resource type="Resource" uid="uid://c4s4h7fgftscn" path="res://Data/Time/TimeSettings.tres" id="5_leq2t"]
 [ext_resource type="Texture2D" uid="uid://cexedsjvcqr8c" path="res://Art/dirtgrass.png" id="6_fdhqg"]
 [ext_resource type="PackedScene" uid="uid://ynaa5b5rupgr" path="res://Prefabs/UI/UI.tscn" id="11_aqhko"]
 [ext_resource type="Script" path="res://Scripts/World/InteractionPoint.cs" id="11_dlj3u"]
@@ -1651,6 +1652,7 @@ configuration = ExtResource("2_0amof")
 uiPrefab = ExtResource("11_aqhko")
 camera = NodePath("../Player/Camera2D")
 startingGameData = ExtResource("4_n4yqy")
+timeSettings = ExtResource("5_leq2t")
 
 [node name="WorldGrid" type="TileMap" parent="." node_paths=PackedStringArray("cursor", "animalSpawnPoint")]
 tile_set = SubResource("TileSet_cnu4e")
@@ -1700,8 +1702,5 @@ one_way_collision_margin = 0.0
 position = Vector2(0, -2)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
-
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-position = Vector2(-40, -22)
 
 [connection signal="body_entered" from="WorldGrid/Area2D" to="WorldGrid/Area2D" method="OnBodyEntered"]
