@@ -12,10 +12,9 @@ public partial class Chicken : Animal
 		// TODO AI modules
 		Ai.AddAction(new WanderAction(this));
 		Ai.AddAction(new IdleAction(this));
-		
 		Ai.AddAction(new RestAction(this, OnRest));
-		
-		Ai.SetUtilityRandomisationFactor(2f);
+
+		Ai.RandomiseUtilitySelection = true;
 	}
 
 	private void OnRest(bool isResting)
