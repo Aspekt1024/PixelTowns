@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://Scripts/Game/Time/TimeSettings.cs" id="1_okdqo"]
 
 [sub_resource type="Gradient" id="Gradient_5idq6"]
-offsets = PackedFloat32Array(0.15, 0.232673, 0.271, 0.375, 0.417, 0.518519, 0.583, 0.770833, 0.833)
+offsets = PackedFloat32Array(0, 0.242424, 0.271, 0.387205, 0.417, 0.680135, 0.708, 0.826599, 0.854)
 colors = PackedColorArray(0.0745098, 0.215686, 0.411765, 1, 0.0745098, 0.215686, 0.411765, 1, 0.839216, 0.737255, 0.482353, 1, 0.839216, 0.737255, 0.482353, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0.921569, 0.670588, 0.639216, 1, 0.921569, 0.670588, 0.639216, 1, 0.0745098, 0.215686, 0.411765, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_4apxm"]
@@ -11,10 +11,10 @@ gradient = SubResource("Gradient_5idq6")
 
 [resource]
 script = ExtResource("1_okdqo")
-hoursPerSecond = 2.0
+hoursPerSecond = 1.0
 morningHour = 6.5
 dayHour = 10.0
-afternoonHour = 14.0
-nightHour = 20.0
+afternoonHour = 17.0
+nightHour = 20.5
 forceSleepHour = 25.0
 lightingGradient = SubResource("GradientTexture1D_4apxm")

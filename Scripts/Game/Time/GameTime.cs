@@ -28,13 +28,23 @@ public class GameTime
         }
     }
 
-    private void ProgressDay()
-    {
-        timeData.Day++;
-    }
-
     public void SetData(TimeData data)
     {
         timeData = data;
+    }
+
+    public bool IsWithinTime(float start24Hour, float end24Hour)
+    {
+        float time24Hour = timeData.NormalisedTime * 24f % 24;
+        if (start24Hour > end24Hour)
+        {
+            return time24Hour >= start24Hour || time24Hour <= end24Hour;
+        }
+        return time24Hour >= start24Hour && time24Hour <= end24Hour;
+    }
+
+    private void ProgressDay()
+    {
+        timeData.Day++;
     }
 }
