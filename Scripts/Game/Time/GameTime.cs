@@ -25,6 +25,7 @@ public class GameTime
         if (settings.IsForceEndOfDay(timeData.NormalisedTime))
         {
             ProgressDay();
+            timeData.NormalisedTime -= 1f;
         }
     }
 
@@ -46,5 +47,6 @@ public class GameTime
     private void ProgressDay()
     {
         timeData.Day++;
+        GameManager.IncrementDay(1); // TODO feed into data instead of telling the game manager or world grid, which shouldn't even really know about this
     }
 }

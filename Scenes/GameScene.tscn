@@ -1671,13 +1671,13 @@ modulate = Color(0, 0, 0, 0.513726)
 position = Vector2(124, 63)
 texture = ExtResource("2_bkfcs")
 
-[node name="Area2D" type="Area2D" parent="WorldGrid" node_paths=PackedStringArray("collision")]
+[node name="ShopEntrance" type="Area2D" parent="WorldGrid" node_paths=PackedStringArray("collision")]
 position = Vector2(265, 70)
 script = ExtResource("11_dlj3u")
 shopData = ExtResource("12_d007c")
 collision = NodePath(".")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldGrid/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WorldGrid/ShopEntrance"]
 shape = SubResource("RectangleShape2D_7nc6g")
 
 [node name="AnimalSpawnPoint" type="Node2D" parent="WorldGrid"]
@@ -1703,4 +1703,4 @@ position = Vector2(0, -2)
 zoom = Vector2(4, 4)
 position_smoothing_enabled = true
 
-[connection signal="body_entered" from="WorldGrid/Area2D" to="WorldGrid/Area2D" method="OnBodyEntered"]
+[connection signal="body_entered" from="WorldGrid/ShopEntrance" to="WorldGrid/ShopEntrance" method="OnBodyEntered"]

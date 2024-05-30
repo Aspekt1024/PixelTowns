@@ -5,13 +5,13 @@
 [ext_resource type="Script" path="res://Scripts/Game/Time/TimeData.cs" id="2_xyr4a"]
 [ext_resource type="Script" path="res://Scripts/Game/GameData.cs" id="3_0cn4e"]
 
-[sub_resource type="Resource" id="Resource_5tbtv"]
+[sub_resource type="Resource" id="Resource_pt46h"]
 script = ExtResource("2_xyr4a")
-day = 0
+day = 1
 normalisedTime = 0.271
 
 [resource]
 script = ExtResource("3_0cn4e")
 PlayerData = ExtResource("1_uduw4")
 WorldData = ExtResource("2_o8c67")
-TimeData = SubResource("Resource_5tbtv")
+TimeData = SubResource("Resource_pt46h")
