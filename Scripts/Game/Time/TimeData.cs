@@ -17,14 +17,7 @@ public partial class TimeData : Resource
 
     private readonly List<IObserver> observers = new();
 
-    public void RegisterObserver(IObserver observer)
-    {
-        observers.Add(observer);
-        
-        observer.OnDayChanged(Day);
-        observer.OnTimeChanged(NormalisedTime);
-    }
-    
+    public void RegisterObserver(IObserver observer) => observers.Add(observer);
     public void UnregisterObserver(IObserver observer) => observers.Remove(observer);
     
     public int Day

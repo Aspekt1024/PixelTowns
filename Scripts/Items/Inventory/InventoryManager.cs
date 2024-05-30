@@ -36,6 +36,8 @@ public partial class InventoryManager : UiBase, ItemContainer.IObserver
         heldItemSlot.Hide();
         
         inventory.Hide();
+        toolbelt.Show();
+        
         toolbelt.RegisterObserver(this);
         inventory.RegisterObserver(this);
     }
