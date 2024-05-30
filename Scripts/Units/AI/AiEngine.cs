@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 namespace PixelTowns.Units.AI;
@@ -8,19 +9,11 @@ public class AiEngine : AiAction.IObserver
     private readonly List<AiAction> aiActions = new();
 
     private AiAction currentAction;
-    private float utilityRandomisationFactor;
+    public bool RandomiseUtilitySelection = false;
     
     public void AddAction(AiAction action)
     {
         aiActions.Add(action);
-    }
-
-    /// <summary>
-    /// Sets the randomisation for the utility to randomise each utility value by a percentage (where 0.1 = 10%)
-    /// </summary>
-    public void SetUtilityRandomisationFactor(float factor)
-    {
-        utilityRandomisationFactor = factor;
     }
 
     public void Tick(float deltaTime)
@@ -50,15 +43,13 @@ public class AiEngine : AiAction.IObserver
     private void RunNextAction()
     {
         int index = -1;
-        float maxUtility = float.MinValue;
-        for (int i = 0; i < aiActions.Count; i++)
+        if (RandomiseUtilitySelection)
         {
-            float utility = aiActions[i].GetUtility() * (1 + Random.Range(-1f, 1f) * utilityRandomisationFactor);
-            if (utility > maxUtility)
-            {
-                maxUtility = utility;
-                index = i;
-            }
+            index = GetRandomisedUtilityIndex();
+        }
+        else
+        {
+            index = GetMaxUtilityIndex();
         }
 
         if (index >= 0)
@@ -71,5 +62,48 @@ public class AiEngine : AiAction.IObserver
         {
             GD.PrintErr($"No viable action was found. AiAction count = {aiActions.Count}");
         }
+    }
+
+    private int GetMaxUtilityIndex()
+    {
+        int index = -1;
+        float maxUtility = float.MinValue;
+        for (int i = 0; i < aiActions.Count; i++)
+        {
+            float utility = aiActions[i].GetUtility();
+            if (utility > maxUtility)
+            {
+                maxUtility = utility;
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    private int GetRandomisedUtilityIndex()
+    {
+        if (!aiActions.Any()) return -1;
+        
+        float totalUtility = 0f;
+        float[] utilities = new float[aiActions.Count];
+        for (int i = 0; i < aiActions.Count; i++)
+        {
+            utilities[i] = aiActions[i].GetUtility();
+            totalUtility += utilities[i];
+        }
+
+        float rand = Random.Range(0f, totalUtility);
+        float counter = 0f;
+        for (int i = 0; i < utilities.Length; i++)
+        {
+            counter += utilities[i];
+            if (counter >= rand)
+            {
+                return i;
+            }
+        }
+
+        AiOverseer.LogError("Something strange happened with the randomised utility selection randomiser. Maybe check on it.");
+        return GetMaxUtilityIndex();
     }
 }
