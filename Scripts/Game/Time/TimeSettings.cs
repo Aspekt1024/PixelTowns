@@ -33,21 +33,22 @@ public partial class TimeSettings : Resource
 
     public static string GetTimeString(float normalisedTime)
     {
-        float hours = normalisedTime * 24;
-        bool isPm = false;
-        if (hours >= 24)
-        {
-            hours -= 24;
-        }
+        float hours = (normalisedTime * 24) % 24;
+        bool isPm = hours >= 12;
         
-        if (hours >= 12)
+        if (hours >= 13)
         {
-            isPm = true;
             hours -= 12;
         }
 
         int hour = Mathf.FloorToInt(hours);
         int minute = Mathf.FloorToInt((hours - hour) * 60f);
+        
+        if (hour == 0)
+        {
+            hour = 12;
+        }
+        
         return $"{hour}:{minute:00} {(isPm ? "pm" : "am")}";
     }
 

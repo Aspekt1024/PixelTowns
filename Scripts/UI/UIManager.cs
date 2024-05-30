@@ -6,6 +6,7 @@ namespace PixelTowns.UI;
 
 public partial class UIManager : CanvasLayer
 {
+    [Export] public HUD HUD;
     [Export] public Array<UiBase> UiList;
     
     private UiBase openUi;
@@ -20,6 +21,11 @@ public partial class UIManager : CanvasLayer
 
     public void RegisterObserver(IObserver observer) => observers.Add(observer);
     public void UnregisterObserver(IObserver observer) => observers.Remove(observer);
+
+    public void Init(GameData gameData)
+    {
+        HUD.Init(gameData);
+    }
 
     public T GetUi<T>() where T : UiBase
     {

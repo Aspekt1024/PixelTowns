@@ -22,8 +22,6 @@ public class GameTime
         timeData.NormalisedTime += settings.NormalizedTimeIncrement(deltaTime);
         canvasModulate.Color = settings.GetTimeOfDayColor(timeData.NormalisedTime);
         
-        GD.Print(TimeSettings.GetTimeString(timeData.NormalisedTime));
-        
         if (settings.IsForceEndOfDay(timeData.NormalisedTime))
         {
             ProgressDay();
@@ -37,7 +35,6 @@ public class GameTime
 
     public void SetData(TimeData data)
     {
-        data ??= new TimeData(){ Day = 0, NormalisedTime = 0.271f};
         timeData = data;
     }
 }

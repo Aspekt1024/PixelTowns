@@ -54,6 +54,8 @@ public partial class GameManager : Node
 
 		gameData = GameData.Load() ?? startingGameData;
 		gameData.ApplyData();
+		
+		UI.Init(gameData);
 
 		gameState.StartGame();
 	}
