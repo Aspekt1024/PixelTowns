@@ -44,5 +44,10 @@ public class InputManager
     {
         inputMaps.ForEach(m => m.InputEvent(@event));
     }
+
+    public static bool IsMouseInteract(InputEvent @event)
+    {
+        return @event is InputEventMouseButton { Pressed: true, ButtonIndex: MouseButton.Right };
+    }
     
 }

@@ -8,6 +8,7 @@ public partial class UIManager : CanvasLayer
 {
     [Export] public HUD HUD;
     [Export] public Array<UiBase> UiList;
+    [Export] public Transition Transition;
     
     private UiBase openUi;
     
