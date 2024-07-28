@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
 using PixelTowns;
@@ -11,6 +10,8 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 {
 	[Export] private Node2D cursor;
 	[Export] private SpawnPoint animalSpawnPoint;
+
+	private WorldData worldData;
 	
 	public enum TerrainLayer
 	{
@@ -34,15 +35,6 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 		IsTillable = 0,
 	}
 	
-	private readonly List<Vector2I> soilCells = new List<Vector2I>();
-	private readonly List<PlantedGrowable> growables = new List<PlantedGrowable>();
-
-	private class PlantedGrowable
-	{
-		public Vector2I Cell;
-		public Growable Growable;
-	}
-	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -57,19 +49,15 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 		cursor.Position = cursorPos;
 	}
 
-	public void TillSoil()
+	public void TillSoilAtCursor()
 	{
 		Vector2 cursorPos = WorldUtil.SnapToGrid(GetGlobalMousePosition());
 		var cell = LocalToMap(cursorPos);
 		
-		var d = GetCellTileData((int)TerrainLayer.Ground, cell);
-		bool isTillable = d.GetCustomDataByLayerId((int)CustomData.IsTillable).AsBool();
-		if (isTillable)
+		var success = CreateSoil(cell);
+		if (success)
 		{
-			d.TerrainSet = (int)Terrain.Dirt;
-			SetCellsTerrainConnect((int)TerrainLayer.Ground, new Array<Vector2I>() {cell}, (int)TerrainSet.Garden, (int)Terrain.Dirt);
-			
-			soilCells.Add(cell);
+			worldData.AddSoil(cell);
 		}
 	}
 
@@ -98,17 +86,15 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 
 	public bool TryPlantSeed(GrowableData growableData, Vector2I cell)
 	{
-		var growableIndex = growables.FindIndex(g => g.Cell == cell);
+		var growableIndex = worldData.PlantedGrowables.FindIndex(g => g.Cell == cell);
 		if (growableIndex >= 0) return false;
 		
 		// TODO we can probably determine if this is soil another way. Maybe add an area to the sprite
-		if (!soilCells.Contains(cell)) return false;
+		if (!worldData.SoilCells.Contains(cell)) return false;
 		
-		Growable growable = GameManager.Config.growables.CreateGrowable(growableData, cell);
-		growable.Position = MapToLocal(cell) + Vector2.Up * 4;
+		PlantedGrowableData plantedGrowableData = worldData.AddGrowableData(growableData, cell);
+		AddPlantedGrowableToWorld(plantedGrowableData);
 		
-		growables.Add(new PlantedGrowable(){ Cell = cell, Growable = growable});
-		AddChild(growable);
 		return true;
 	}
 
@@ -117,17 +103,17 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 		Vector2 cursorPos = WorldUtil.SnapToGrid(GetGlobalMousePosition());
 		var cell = LocalToMap(cursorPos);
 		
-		var growableIndex = growables.FindIndex(g => g.Cell == cell);
+		var growableIndex = worldData.PlantedGrowables.FindIndex(g => g.Cell == cell);
 		if (growableIndex < 0) return;
 
-		Growable growable = growables[growableIndex].Growable;
-		if (growable.IsGrown)
+		PlantedGrowableData data = worldData.PlantedGrowables[growableIndex];
+		if (data.Growable.IsGrown)
 		{
 			// TODO instead we should just change the inventory data and use events to drive the inventory manager
 			// TODO we may need to rethink InventoryManager being a UI
-			GameManager.UI.GetUi<InventoryManager>().AddItem(growable.GrowableData, 1);
-			growables[growableIndex].Growable.QueueFree();
-			growables.RemoveAt(growableIndex);
+			GameManager.UI.GetUi<InventoryManager>().AddItem(data.GrowableData, 1);
+			data.Growable.QueueFree();
+			worldData.PlantedGrowables.RemoveAt(growableIndex);
 		}
 		else
 		{
@@ -137,6 +123,17 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 
 	public void SetData(WorldData data)
 	{
+		worldData = data;
+		foreach (var soilCell in data.SoilCells)
+		{
+			CreateSoil(soilCell);
+		}
+
+		foreach (var plantedGrowable in data.PlantedGrowables)
+		{
+			AddPlantedGrowableToWorld(plantedGrowable);
+		}
+		
 		foreach (var animal in data.PurchasedAnimals)
 		{
 			SpawnAnimal(animal);
@@ -159,6 +156,30 @@ public partial class WorldGrid : TileMap, TimeData.IObserver
 
 	private void IncrementDay(int numDays)
 	{
-		growables.ForEach(g => g.Growable.IncrementDays(numDays));
+		worldData.PlantedGrowables.ForEach(g => g.Growable.IncrementDays(numDays));
+	}
+	
+	//private readonly Dictionary<Vector2I, Growable>
+
+	private void AddPlantedGrowableToWorld(PlantedGrowableData data)
+	{
+		Growable growable = GameManager.Config.growables.CreateGrowable(data);
+		if (growable != null)
+		{
+			growable.Position = MapToLocal(data.Cell) + Vector2.Up * 4;
+			AddChild(growable);
+		}
+	}
+
+	private bool CreateSoil(Vector2I cell)
+	{
+		var d = GetCellTileData((int)TerrainLayer.Ground, cell);
+		bool isTillable = d.GetCustomDataByLayerId((int)CustomData.IsTillable).AsBool();
+		if (isTillable)
+		{
+			d.TerrainSet = (int)Terrain.Dirt;
+			SetCellsTerrainConnect((int)TerrainLayer.Ground, new Array<Vector2I>() {cell}, (int)TerrainSet.Garden, (int)Terrain.Dirt);
+		}
+		return isTillable;
 	}
 }

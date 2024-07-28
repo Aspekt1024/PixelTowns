@@ -4,4 +4,6 @@
 
 [resource]
 script = ExtResource("1_qyo3r")
+SoilCells = Array[Vector2i]([])
+PlantedGrowables = Array[Object]([])
 PurchasedAnimals = Array[Object]([])
