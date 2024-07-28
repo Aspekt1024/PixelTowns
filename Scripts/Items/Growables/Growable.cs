@@ -1,48 +1,43 @@
 ﻿using Godot;
+using PixelTowns.World;
 
 namespace PixelTowns.Items;
 
-public partial class Growable : Node2D
+public partial class Growable : Node2D, PlantedGrowableData.IObserver
 {
     [Export] private Sprite2D sprite;
 
-    public GrowableData GrowableData { get; private set; }
-    private Vector2I cell;
+    public PlantedGrowableData Data { get; private set; }
     
-    private int daysInGrowth;
-
     public bool IsGrown { get; private set; }
 
-    public void Init(GrowableData growableData, Vector2I cell)
+    public void Init(PlantedGrowableData data)
     {
-        this.GrowableData = growableData;
-        this.cell = cell;
-        
+        Data = data;
         IsGrown = false;
-        daysInGrowth = 0;
-
-        UpdateGrowthState();
+        OnDaysInGrowthChanged(data.DaysInGrowth);
+        
+        data.RegisterObserver(this);
     }
 
     public void IncrementDays(int numDays = 0)
     {
-        daysInGrowth += numDays;
-        UpdateGrowthState();
+        Data.DaysInGrowth += numDays;
     }
 
-    private void UpdateGrowthState()
+    public void OnDaysInGrowthChanged(int daysInGrowth)
     {
-        int numGrowthFrames = GrowableData.SpriteFrames.GetFrameCount("default");
-        float growthRatio = (float)daysInGrowth / GrowableData.DaysToGrow;
+        int numGrowthFrames = Data.GrowableData.SpriteFrames.GetFrameCount("default");
+        float growthRatio = (float)daysInGrowth / Data.GrowableData.DaysToGrow;
         
         int growthIndex = Mathf.Max(0, Mathf.FloorToInt(growthRatio * numGrowthFrames) - 1);
         
-        if (daysInGrowth >= GrowableData.DaysToGrow)
+        if (daysInGrowth >= Data.GrowableData.DaysToGrow)
         {
             IsGrown = true;
             growthIndex = numGrowthFrames - 1;
         }
 
-        sprite.Texture = GrowableData.GetFrameTexture(growthIndex);
+        sprite.Texture = Data.GrowableData.GetFrameTexture(growthIndex);
     }
 }

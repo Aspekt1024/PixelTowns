@@ -70,7 +70,7 @@ public partial class Player : CharacterBody2D, InventoryManager.IObserver, Playe
 		// TODO move usage to the selected item instead of having the player deal with different types and worrying about input modes.
 		if (inputMode == InputMode.Till)
 		{
-			GameManager.WorldGrid.TillSoil();
+			GameManager.WorldGrid.TillSoilAtCursor();
 		}
 		else if (inputMode == InputMode.Plant)
 		{
