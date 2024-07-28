@@ -14,14 +14,14 @@ public partial class HUD : Control, TimeData.IObserver, CurrencyData.IObserver
         data.TimeData.RegisterObserver(this);
         data.PlayerData.CurrencyData.RegisterObserver(this);
         
-        OnDayChanged(data.TimeData.Day);
+        OnDayChanged(data.TimeData.Day, 0);
         OnTimeChanged(data.TimeData.NormalisedTime);
         OnCurrencyModified(data.PlayerData.CurrencyData);
     }
 
-    public void OnDayChanged(int day)
+    public void OnDayChanged(int newDay, int daysIncremented)
     {
-        dayLabel.Text = $"Day {day}";
+        dayLabel.Text = $"Day {newDay}";
     }
 
     public void OnTimeChanged(float normalisedTime)

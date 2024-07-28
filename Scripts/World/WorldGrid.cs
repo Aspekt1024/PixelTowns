@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using Godot;
 using Godot.Collections;
+using PixelTowns;
 using PixelTowns.InventoryManagement;
 using PixelTowns.Items;
 using PixelTowns.Units;
 using PixelTowns.World;
 
-public partial class WorldGrid : TileMap
+public partial class WorldGrid : TileMap, TimeData.IObserver
 {
 	[Export] private Node2D cursor;
 	[Export] private SpawnPoint animalSpawnPoint;
@@ -47,17 +48,13 @@ public partial class WorldGrid : TileMap
 	{
 		var pos = LocalToMap(GameManager.Player.Position);
 		GameManager.Player.Position = MapToLocal(pos);
+		GameManager.GameData.TimeData.RegisterObserver(this);
 	}
 
 	public override void _Process(double delta)
 	{
 		Vector2 cursorPos = WorldUtil.SnapToGrid(GetGlobalMousePosition());
 		cursor.Position = cursorPos;
-	}
-
-	public void IncrementDay(int numDays)
-	{
-		growables.ForEach(g => g.Growable.IncrementDays(numDays));
 	}
 
 	public void TillSoil()
@@ -149,5 +146,19 @@ public partial class WorldGrid : TileMap
 	public void SpawnAnimal(AnimalData animalData)
 	{
 		animalSpawnPoint.Spawn(animalData.Prefab);
+	}
+
+	public void OnDayChanged(int newDay, int daysIncremented)
+	{
+		IncrementDay(daysIncremented);
+	}
+
+	public void OnTimeChanged(float normalisedTime)
+	{
+	}
+
+	private void IncrementDay(int numDays)
+	{
+		growables.ForEach(g => g.Growable.IncrementDays(numDays));
 	}
 }

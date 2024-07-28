@@ -6,6 +6,7 @@ namespace PixelTowns;
 public partial class TimeSettings : Resource
 {
     [Export] private float hoursPerSecond = 0.1f;
+    [Export] public float hoursPerDay = 24f;
 
     // TODO make different profiles per "season"
     [Export] public float morningHour = 6.5f;
@@ -30,7 +31,7 @@ public partial class TimeSettings : Resource
     {
         return lightingGradient.Gradient.Sample(normalisedTime % 1f);
     }
-
+    
     public static string GetTimeString(float normalisedTime)
     {
         float hours = (normalisedTime * 24) % 24;

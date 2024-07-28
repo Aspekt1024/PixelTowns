@@ -25,7 +25,6 @@ public class GameTime
         if (settings.IsForceEndOfDay(timeData.NormalisedTime))
         {
             ProgressDay();
-            timeData.NormalisedTime -= 1f;
         }
     }
 
@@ -36,7 +35,7 @@ public class GameTime
 
     public bool IsWithinTime(float start24Hour, float end24Hour)
     {
-        float time24Hour = timeData.NormalisedTime * 24f % 24;
+        float time24Hour = GetTimeFromNormalized(timeData.NormalisedTime);
         if (start24Hour > end24Hour)
         {
             return time24Hour >= start24Hour || time24Hour <= end24Hour;
@@ -44,9 +43,16 @@ public class GameTime
         return time24Hour >= start24Hour && time24Hour <= end24Hour;
     }
 
-    private void ProgressDay()
+    public void ProgressDay()
     {
-        timeData.Day++;
-        GameManager.IncrementDay(1); // TODO feed into data instead of telling the game manager or world grid, which shouldn't even really know about this
+        GameManager.UI.Transition.FadeToBlack(() =>
+        {
+            timeData.Day++;
+            timeData.NormalisedTime = GetNormalizedTime(settings.morningHour);
+            GameManager.UI.Transition.FadeToScene(null);
+        });
     }
+
+    private float GetNormalizedTime(float time) => time / settings.hoursPerDay;
+    private float GetTimeFromNormalized(float normalisedTime) => normalisedTime * settings.hoursPerDay % settings.hoursPerDay;
 }

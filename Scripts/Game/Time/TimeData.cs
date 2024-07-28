@@ -11,7 +11,7 @@ public partial class TimeData : Resource
 
     public interface IObserver
     {
-        void OnDayChanged(int day);
+        void OnDayChanged(int newDay, int daysIncremented);
         void OnTimeChanged(float normalisedTime);
     }
 
@@ -25,8 +25,9 @@ public partial class TimeData : Resource
         get => day;
         set
         {
+            int daysIncremented = value - day;
             day = value;
-            observers.ForEach(o => o.OnDayChanged(value));
+            observers.ForEach(o => o.OnDayChanged(value, daysIncremented));
         }
     }
 

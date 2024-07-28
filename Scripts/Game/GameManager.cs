@@ -71,11 +71,6 @@ public partial class GameManager : Node
 		input.PhysicsTick();
 	}
 
-	public static void IncrementDay(int numDays = 1)
-	{
-		WorldGrid.IncrementDay(numDays);
-	}
-
 	public override Array<Dictionary> _GetPropertyList()
 	{
 		var props = base._GetPropertyList();
