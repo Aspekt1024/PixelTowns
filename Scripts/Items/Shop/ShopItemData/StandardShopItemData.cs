@@ -1,4 +1,4 @@
-﻿using Godot;
+using Godot;
 using PixelTowns.Items;
 
 namespace PixelTowns.ShopManagement;

@@ -1,11 +1,18 @@
-[gd_resource type="Resource" script_class="ShopData" load_steps=4 format=3 uid="uid://duy4uudx53yiy"]
+[gd_resource type="Resource" script_class="ShopData" load_steps=7 format=3 uid="uid://duy4uudx53yiy"]
 
 [ext_resource type="Script" path="res://Scripts/Items/Shop/ShopData.cs" id="1_bm5yu"]
 [ext_resource type="Texture2D" uid="uid://bdlyfljuticie" path="res://Art/Imported/Icons/FreeKnight_v1/Colour1/NoOutline/120x80_PNGSheets/_SlideTransitionStart.png" id="1_mum04"]
 [ext_resource type="Resource" uid="uid://cvio823jbby5d" path="res://Data/Shop/ShopItems/ChickenShopItem.tres" id="2_m4otj"]
+[ext_resource type="Resource" uid="uid://d0utdotp275li" path="res://Data/ItemData/Placeables/CornSeed.tres" id="3_nycqm"]
+[ext_resource type="Script" path="res://Scripts/Items/Shop/ShopItemData/StandardShopItemData.cs" id="4_put0m"]
+
+[sub_resource type="Resource" id="Resource_5b0j2"]
+script = ExtResource("4_put0m")
+ItemData = ExtResource("3_nycqm")
+Quantity = 10
 
 [resource]
 script = ExtResource("1_bm5yu")
 Portrait = ExtResource("1_mum04")
 Greeting = "Hi there, hello! This is my shop!"
-ShopItems = Array[Resource]([ExtResource("2_m4otj")])
+ShopItems = Array[Resource]([ExtResource("2_m4otj"), SubResource("Resource_5b0j2")])

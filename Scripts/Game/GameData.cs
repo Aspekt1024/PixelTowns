@@ -15,6 +15,7 @@ public partial class GameData : Resource
 
 	[Export] public PlayerData PlayerData;
 	[Export] public WorldData WorldData;
+	[Export] public TimeData TimeData;
 	
 	public void SaveGame(string name = DefaultFile)
 	{
@@ -34,12 +35,16 @@ public partial class GameData : Resource
 		string file = $"{SavesDir}/{name}.res";
 		if (!ResourceLoader.Exists(file)) return null;
 		
-		return ResourceLoader.Load<GameData>(file);
+		GameData data = ResourceLoader.Load<GameData>(file);
+		data.TimeData ??= new TimeData(){ Day = 0, NormalisedTime = 0.271f};
+
+		return data;
 	}
 
 	public void ApplyData()
 	{
 		GameManager.UI.GetUi<InventoryManager>().PopulateInventory(PlayerData.InventoryData);
 		GameManager.WorldGrid.SetData(WorldData);
+		GameManager.Time.SetData(TimeData);
 	}
 }

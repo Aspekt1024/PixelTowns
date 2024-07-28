@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ynaa5b5rupgr"]
+[gd_scene load_steps=11 format=3 uid="uid://ynaa5b5rupgr"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UIManager.cs" id="1_pk3xh"]
 [ext_resource type="PackedScene" uid="uid://b4cwbuk657slc" path="res://Prefabs/UI/Quickbar.tscn" id="2_2xq05"]
@@ -6,10 +6,18 @@
 [ext_resource type="PackedScene" uid="uid://csnwrpfda5507" path="res://Prefabs/UI/Inventory.tscn" id="4_sdrrq"]
 [ext_resource type="PackedScene" uid="uid://bhqkd3nta8n1y" path="res://Prefabs/UI/Slot.tscn" id="5_jxey7"]
 [ext_resource type="PackedScene" uid="uid://y2f1frqpn4t7" path="res://Prefabs/UI/ShopUI.tscn" id="6_cdq0y"]
+[ext_resource type="Script" path="res://Scripts/UI/HUD.cs" id="7_1yahn"]
+[ext_resource type="FontFile" uid="uid://coerlu6etwe6v" path="res://Art/Imported/Fonts/minecraft-font/MinecraftRegular-Bmg3.otf" id="8_x1d82"]
+[ext_resource type="Script" path="res://Scripts/UI/Transition.cs" id="9_uv0g2"]
 
-[node name="Ui" type="CanvasLayer" node_paths=PackedStringArray("UiList")]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8e13b"]
+bg_color = Color(0, 0, 0, 1)
+
+[node name="Ui" type="CanvasLayer" node_paths=PackedStringArray("HUD", "UiList", "Transition")]
 script = ExtResource("1_pk3xh")
-UiList = [NodePath("InventoryManager"), NodePath("ShopUi")]
+HUD = NodePath("Panel/HUD")
+UiList = [NodePath("InventoryManager"), NodePath("Panel/ShopUi")]
+Transition = NodePath("CanvasLayer")
 
 [node name="InventoryManager" type="Control" parent="." node_paths=PackedStringArray("toolbelt", "inventory")]
 layout_mode = 3
@@ -26,8 +34,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Toolbelt" parent="Panel" instance=ExtResource("2_2xq05")]
+visible = false
 top_level = true
 layout_mode = 1
 anchors_preset = 7
@@ -45,6 +55,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 
 [node name="Inventory" parent="Panel" instance=ExtResource("4_sdrrq")]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -58,4 +69,76 @@ offset_bottom = 98.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ShopUi" parent="." instance=ExtResource("6_cdq0y")]
+[node name="ShopUi" parent="Panel" instance=ExtResource("6_cdq0y")]
+visible = false
+layout_mode = 1
+
+[node name="HUD" type="Control" parent="Panel" node_paths=PackedStringArray("dayLabel", "timeLabel", "moneyLabel")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("7_1yahn")
+dayLabel = NodePath("DayLabel")
+timeLabel = NodePath("TimeLabel")
+moneyLabel = NodePath("MoneyLabel")
+
+[node name="DayLabel" type="Label" parent="Panel/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -267.0
+offset_top = 37.0
+offset_right = -145.0
+offset_bottom = 67.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("8_x1d82")
+theme_override_font_sizes/font_size = 30
+text = "Day X"
+
+[node name="TimeLabel" type="Label" parent="Panel/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -230.0
+offset_top = 85.0
+offset_right = -91.0
+offset_bottom = 118.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("8_x1d82")
+theme_override_font_sizes/font_size = 30
+text = "10:00 am"
+
+[node name="MoneyLabel" type="Label" parent="Panel/HUD"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -106.0
+offset_top = 179.0
+offset_right = -21.0
+offset_bottom = 221.0
+grow_horizontal = 0
+theme_override_fonts/font = ExtResource("8_x1d82")
+theme_override_font_sizes/font_size = 30
+text = "1000 g"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." node_paths=PackedStringArray("canvasModulate")]
+script = ExtResource("9_uv0g2")
+canvasModulate = NodePath("CanvasModulate")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="CanvasLayer"]
+
+[node name="Transition" type="Panel" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8e13b")

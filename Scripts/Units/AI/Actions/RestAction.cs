@@ -7,7 +7,7 @@ namespace PixelTowns.Scripts.Units.AI;
 public class RestAction : AiAction
 {
     private float startTime;
-    private const float RestDuration = 15000f;
+    private const float RestDuration = 5000f;
 
     private OverTimeEffect overTimeEffect;
     private readonly Action<bool> onRestCallback;
@@ -28,7 +28,11 @@ public class RestAction : AiAction
 
     public override float GetUtility()
     {
-        return 1 - Unit.Stats.Energy.Ratio; // TODO add curves
+        if (GameManager.Time.IsWithinTime(22f, 5.5f))
+        {
+            return 100000f; // TODO find a better way to override
+        }
+        return 1f - Unit.Stats.Energy.Ratio; // TODO add curves
     }
 
     protected override void Begin()

@@ -1,19 +1,21 @@
 ﻿using Godot;
-using PixelTowns.ShopManagement;
 
 namespace PixelTowns.World;
 
-public partial class InteractionPoint : Area2D
+public abstract partial class InteractionPoint : Area2D
 {
-    [Export] private ShopData shopData;
-    [Export] private CollisionObject2D collision;
-
-    public void OnBodyEntered(Node2D other)
+    public override void _Ready()
     {
-        if (other is Player p)
+        InputEvent += OnInput;
+    }
+
+    private void OnInput(Node viewport, InputEvent @event, long shapeidx)
+    {
+        if (InputManager.IsMouseInteract(@event))
         {
-            GameManager.UI.GetUi<ShopUI>().SetData(shopData);
-            GameManager.UI.OpenUi<ShopUI>();
+            HandleInteraction();
         }
     }
+
+    protected abstract void HandleInteraction();
 }
