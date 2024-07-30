@@ -12,6 +12,7 @@ gradient = SubResource("Gradient_5idq6")
 [resource]
 script = ExtResource("1_okdqo")
 hoursPerSecond = 0.01
+hoursPerDay = 24.0
 morningHour = 6.5
 dayHour = 10.0
 afternoonHour = 17.0
