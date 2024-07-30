@@ -50,7 +50,7 @@ public class Movement
 
     private void ActionMovement(float deltaTime)
     {
-        Vector2 dist = navAgent.GetNextPathPosition() - body.Position;
+        Vector2 dist = navAgent.GetNextPathPosition() - body.GlobalPosition;
         Vector2 moveVector = dist.Normalized() * settings.moveSpeed * deltaTime;
         
         bool isMovingRight = moveVector.X > 0;
