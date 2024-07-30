@@ -8,6 +8,6 @@ public partial class SpawnPoint : Node2D
     {
         Node2D obj = prefab.Instantiate<Node2D>();
         AddChild(obj);
-        obj.GlobalPosition = WorldUtil.RandomCellInRadius(GlobalPosition, 5);
+        obj.GlobalPosition = WorldUtil.RandomPathableCellInRadius(GlobalPosition, 5);
     }
 }

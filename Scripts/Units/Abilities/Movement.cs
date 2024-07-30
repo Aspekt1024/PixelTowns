@@ -6,43 +6,43 @@ namespace PixelTowns.Units;
 public class Movement
 {
     private readonly CharacterBody2D body;
+    private readonly NavigationAgent2D navAgent;
     private readonly MovementSettings settings;
 
-    private Vector2 destination;
     private bool isFacingRight;
 
     public event Action DestinationReached = delegate { };
     public event Action<bool> MoveStateChanged = delegate { };
     public event Action<bool> DirectionChanged = delegate { };
-
-    private bool _isMoving;
-
-    public bool IsMoving
-    {
-        get => _isMoving;
-        private set
-        {
-            _isMoving = value;
-            MoveStateChanged?.Invoke(value);
-        }
-    }
-
-    public Movement(CharacterBody2D body, MovementSettings settings)
+    
+    public Movement(CharacterBody2D body, NavigationAgent2D navAgent, MovementSettings settings)
     {
         this.body = body;
+        this.navAgent = navAgent;
         this.settings = settings;
+
+        navAgent.PathDesiredDistance = 1f;
+        navAgent.TargetDesiredDistance = 1f;
+        
+        navAgent.NavigationFinished += OnDestinationReached;
+
+        Callable.From(ActorSetup).CallDeferred();
+    }
+
+    ~Movement()
+    {
+        navAgent.NavigationFinished -= OnDestinationReached;
     }
 
     public void MoveTo(Vector2 location)
     {
-        destination = location;
-        IsMoving = true;
-        // TODO find path using Astar2D and NavigationServer2D
+        navAgent.TargetPosition = location;
+        MoveStateChanged?.Invoke(true);
     }
 
-    public void Tick(float deltaTime)
+    public void PhysicsTick(float deltaTime)
     {
-        if (IsMoving)
+        if (!navAgent.IsNavigationFinished())
         {
             ActionMovement(deltaTime);
         }
@@ -50,7 +50,7 @@ public class Movement
 
     private void ActionMovement(float deltaTime)
     {
-        Vector2 dist = destination - body.Position;
+        Vector2 dist = navAgent.GetNextPathPosition() - body.Position;
         Vector2 moveVector = dist.Normalized() * settings.moveSpeed * deltaTime;
         
         bool isMovingRight = moveVector.X > 0;
@@ -63,12 +63,22 @@ public class Movement
         if (moveVector.Length() >= dist.Length())
         {
             body.MoveAndCollide(dist);
-            IsMoving = false;
             DestinationReached?.Invoke();
         }
         else
         {
             body.MoveAndCollide(moveVector);
         }
+    }
+
+    private void OnDestinationReached()
+    {
+        DestinationReached?.Invoke();
+        MoveStateChanged?.Invoke(false);
+    }
+
+    private async void ActorSetup()
+    {
+        await body.ToSignal(body.GetTree(), SceneTree.SignalName.PhysicsFrame);
     }
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c4y4218011xju"]
+[gd_scene load_steps=24 format=3 uid="uid://c4y4218011xju"]
 
 [ext_resource type="Texture2D" uid="uid://da4brpvqyjo27" path="res://Art/Imported/kenney_tiny-town/Tilemap/tilemap_packed.png" id="1_fvejh"]
 [ext_resource type="Script" path="res://Scripts/Units/Player.cs" id="1_o57kg"]
@@ -1640,6 +1640,12 @@ sources/2 = SubResource("TileSetAtlasSource_ceyf4")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7nc6g"]
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_t0ul6"]
+vertices = PackedVector2Array(402, 211, -129, 200, 309, 115, 407, -73)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2), PackedInt32Array(3, 0, 2)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-224, 209, 302, 106, 418, -117, 412, 222)])
+source_geometry_group_name = &"navigation_polygon_source_group"
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wreou"]
 size = Vector2(18, 23)
 
@@ -1691,6 +1697,9 @@ shape = SubResource("RectangleShape2D_7nc6g")
 [node name="AnimalSpawnPoint" type="Node2D" parent="WorldGrid"]
 position = Vector2(51, 108)
 script = ExtResource("12_jyxec")
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="WorldGrid"]
+navigation_polygon = SubResource("NavigationPolygon_t0ul6")
 
 [node name="Player" type="CharacterBody2D" parent="."]
 position = Vector2(49, 38)
