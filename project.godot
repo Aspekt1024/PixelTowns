@@ -105,6 +105,16 @@ quicksave={
 
 locale/translations=PackedStringArray("res://Data/Localisations/Items.de.translation", "res://Data/Localisations/Items.en.translation")
 
+[layer_names]
+
+2d_physics/layer_1="World"
+2d_physics/layer_2="Player"
+2d_physics/layer_3="Units"
+
+[navigation]
+
+2d/default_cell_size=4.0
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

@@ -15,7 +15,7 @@ public class WanderAction : AiAction
 
     protected override void Begin()
     {
-        Vector2 destination = WorldUtil.RandomCellInRadius(Unit.Position, 2);
+        Vector2 destination = WorldUtil.RandomCellInRadius(Unit.GlobalPosition, 2);
         Unit.Movement.MoveTo(destination);
         Unit.Movement.DestinationReached += OnDestinationReached;
 
